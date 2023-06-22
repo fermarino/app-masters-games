@@ -12,6 +12,7 @@ const GamesList = (props) => {
           key={game.id}
           title={game.title}
           genre={game.genre}
+          thumbnail={game.thumbnail}
           short_description={game.short_description}
         />
       ))}
