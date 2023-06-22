@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
-import Image from 'next/image'
-
 import styles from '@/components/GamesList/GamesList.module.css'
+import React, { useState } from 'react'
+
 import Game from '../Game/Game'
 
 const GamesList = (props) => {
@@ -19,6 +18,12 @@ const GamesList = (props) => {
     return genres;
   }, []);
 
+  const [isActive, setIsActive] = useState('All');
+
+  const handleClickFilter = (genre) => {
+    setIsActive(genre);
+  }
+
   return (
     <>
       <input
@@ -26,11 +31,15 @@ const GamesList = (props) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
+
       {filteredGenres.map((genre) => (
-        <button key={genre}>
+
+        <button
+          key={genre}
+          className={isActive === genre ? styles.active : styles.button}
+          onClick={() => handleClickFilter(genre)}>
           {genre}
         </button>
-
       ))}
       <ul className={styles.gamesList}>
         {filteredGames.map((game) => (
