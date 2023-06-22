@@ -1,14 +1,19 @@
 import React from 'react'
 import Image from 'next/image'
 
+import styles from '@/components/GamesList/GamesList.module.css'
+import Game from '../Game/Game'
+
 const GamesList = (props) => {
   return (
-    <ul>
+    <ul className={styles.gamesList}>
       {props.games.map((game) => (
-        <li key={game.id}>
-          <h1>{game.title}</h1>
-          <p>{game.short_description}</p>
-        </li>
+        <Game
+          key={game.id}
+          title={game.title}
+          genre={game.genre}
+          short_description={game.short_description}
+        />
       ))}
     </ul>
   )
