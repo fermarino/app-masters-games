@@ -1,95 +1,83 @@
-import Image from 'next/image'
+"use client"
+
+import React, {useState} from 'react'
 import styles from './page.module.css'
 
+const gamesApi = 'https://games-test-api-81e9fb0d564a.herokuapp.com/api/data';
+
 export default function Home() {
+  
+  const [games, setGames] = useState ([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchGames = async () => {
+    setIsLoading(true);
+    setError(null);
+    const start = performance.now();
+    
+    try {
+      const response = await fetch (gamesApi, {
+        headers: {
+          'dev-email-address':
+          'fnandomarino@gmail.com'
+        }
+      });
+      
+      const end = performance.now();
+      const time = end - start;
+      console.log(`A chamada durou: ${time}ms`); // verificar duração - apagar dps
+
+      if (time > 5000) {
+        throw new Error('O servidor demorou para responder, tente mais tarde');
+      }
+
+      if (response.status === 500 ||
+          response.status === 502 ||
+          response.status === 503 ||
+          response.status === 504 ||
+          response.status === 507 ||
+          response.status === 508 ||
+          response.status === 509
+        ) {
+          console.log(response.status)// verificar stauts do erro - apagar depois
+          throw new Error('O servidor fahou em responder, tente recarregar a página');
+        } else if (!response.ok) {
+          console.log(response.status)
+          throw new Error('O servidor não conseguirá responder por agora, tente voltar novamente mais tarde')
+        }  
+
+      const data = await response.json ();
+
+      setGames(data);
+      console.log(data) //exibir dados - apagar depois.
+    } catch (error) {
+      setError(error.message)
+      setIsLoading(false)
+    }
+    setIsLoading(false);
+  };
+
+  if (error) {
+    return <span>{error}</span>
+  }
+
+  if(isLoading) {
+    return <p>Carregando...</p>
+  }
+  
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+    <section>
+      <button onClick={fetchGames}>Carregar Jogos</button>
+    </section>
+    <section>
+      {games.map((game) => (
+        <div key={game.id}>
+        <h1>{game.title}</h1>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      ))}
+    </section>
+    </>
   )
 }
