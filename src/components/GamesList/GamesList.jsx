@@ -6,10 +6,13 @@ import Game from '../Game/Game'
 const GamesList = (props) => {
 
   const [search, setSearch] = useState('');
+  const [isActive, setIsActive] = useState('All');
 
   const lowerSearch = search.toLowerCase();
 
   const filteredGames = props.games.filter((game) => game.title.toLowerCase().includes(lowerSearch))
+
+  //Requisições do Botão
 
   const filteredGenres = props.games.reduce((genres, game) => {
     if (!genres.includes(game.genre)) {
@@ -18,11 +21,14 @@ const GamesList = (props) => {
     return genres;
   }, []);
 
-  const [isActive, setIsActive] = useState('All');
 
   const handleClickFilter = (genre) => {
     setIsActive(genre);
-  }
+  };
+
+  const filteredGamesGenre = filteredGames.filter((game) =>
+    isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
+  );
 
   return (
     <>
@@ -42,7 +48,7 @@ const GamesList = (props) => {
         </button>
       ))}
       <ul className={styles.gamesList}>
-        {filteredGames.map((game) => (
+        {filteredGamesGenre.map((game) => (
           <Game
             key={game.id}
             title={game.title}
