@@ -2,6 +2,7 @@
 
 import React, {useState} from 'react'
 import styles from './page.module.css'
+import GamesList from '@/components/GamesList/GamesList';
 
 const gamesApi = 'https://games-test-api-81e9fb0d564a.herokuapp.com/api/data';
 
@@ -58,26 +59,28 @@ export default function Home() {
     setIsLoading(false);
   };
 
+  let content = <p>Clique no botão para carregar os jogos</p>
+
+  if(games.length > 0) {
+    content = <GamesList games={games}/>
+  }
+
   if (error) {
-    return <span>{error}</span>
+    content = <span>{error}</span>
   }
 
   if(isLoading) {
-    return <p>Carregando...</p>
+    content = <p>Carregando...</p>
   }
   
   return (
     <>
-    <section>
-      <button onClick={fetchGames}>Carregar Jogos</button>
-    </section>
-    <section>
-      {games.map((game) => (
-        <div key={game.id}>
-        <h1>{game.title}</h1>
-        </div>
-      ))}
-    </section>
+      <section>
+        <button onClick={fetchGames}>Carregar Jogos</button>
+      </section>
+      <section>
+        {content}
+      </section>
     </>
   )
 }
