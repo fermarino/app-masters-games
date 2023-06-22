@@ -1,7 +1,8 @@
-import styles from '@/components/GamesList/GamesList.module.css'
 import React, { useState } from 'react'
+import styles from '@/components/GamesList/GamesList.module.css'
 
 import Game from '../Game/Game'
+import SearchInput from '../SearchField/SearchField'
 
 const GamesList = (props) => {
 
@@ -30,13 +31,13 @@ const GamesList = (props) => {
     isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
   );
 
+  const handleSearch = (value) => {
+    setSearch(value);
+  }
+
   return (
     <>
-      <input
-        type='text'
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <SearchInput onSearch={handleSearch}/>
 
       {filteredGenres.map((genre) => (
 
