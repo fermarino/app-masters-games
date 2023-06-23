@@ -1,0 +1,16 @@
+.container {
+  background-color: #9500DB;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  align-items: center;
+  width: 100vw;
+  height: 11rem;
+}
+
+.logo {
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 3.8rem;
+}

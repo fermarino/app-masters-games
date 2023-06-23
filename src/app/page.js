@@ -16,7 +16,8 @@ const Home = () => {
   }
 
   if (games.length > 0) {
-    return <GamesList games={games} />;
+    return (
+    <GamesList games={games} />);
   }
 
   return null;

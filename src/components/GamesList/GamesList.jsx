@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import styles from '@/components/GamesList/GamesList.module.css'
 
 import Game from '../Game/Game'
-import SearchInput from '../SearchInput/SearchInput'
+import SearchInput from '../Search/Search'
 import GenreButton from '../GenreButton/GenreButton'
+import Header from '../Header/Header'
 
 const GamesList = (props) => {
 
@@ -43,24 +44,26 @@ const GamesList = (props) => {
 
   return (
     <>
-      <SearchInput onSearch={handleSearch}/>
+      <Header onSearch={handleSearch} />
 
-      <GenreButton 
-        genre={'All'}
-        isActive={isActive === 'All'}
-        onClick={handleSelectAll}
-        allGenres
-      />
-
-      {filteredGenres.map((genre) => (
+      <ul className={styles.genresContainer}>
         <GenreButton
-          key={genre}
-          genre={genre}
-          isActive={isActive === genre}
-          onClick={handleClickFilter}
+          genre={'All'}
+          isActive={isActive === 'All'}
+          onClick={handleSelectAll}
+          allGenres
         />
-      ))}
-      <ul className={styles.gamesList}>
+        {filteredGenres.map((genre) => (
+          <GenreButton
+            key={genre}
+            genre={genre}
+            isActive={isActive === genre}
+            onClick={handleClickFilter}
+          />
+        ))}
+      </ul>
+
+      <div className={styles.gamesList}>
         {filteredGamesGenre.map((game) => (
           <Game
             key={game.id}
@@ -70,7 +73,7 @@ const GamesList = (props) => {
             short_description={game.short_description}
           />
         ))}
-      </ul>
+      </div>
     </>
   )
 }

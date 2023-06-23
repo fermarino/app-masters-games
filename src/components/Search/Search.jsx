@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const SearchInput = ({ onSearch }) => {
+import styles from '@/components/Search/Search.module.css'
+
+const Search = ({ onSearch }) => {
   const [search, setSearch] = useState('');
 
   const handleInputChange = (e) => {
@@ -11,12 +13,13 @@ const SearchInput = ({ onSearch }) => {
 
   return (
     <input
+      className={styles.searchBar}
       type="text"
       value={search}
       onChange={handleInputChange}
-      placeholder="Pesquisar jogo"
+      placeholder="Pesquisar jogos"
     />
   );
 };
 
-export default SearchInput;
+export default Search;

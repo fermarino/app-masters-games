@@ -1,0 +1,9 @@
+.cardContainer {
+  display: flex;
+}
+
+.cardGame {
+  background-color: plum;
+  width: 400px;
+  height: 400px;
+}

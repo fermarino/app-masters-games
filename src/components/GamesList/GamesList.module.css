@@ -1,0 +1,19 @@
+.gamesList {
+  background-color: #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.genresContainer {
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem auto;
+
+  width: 100vw;
+}

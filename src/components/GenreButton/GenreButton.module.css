@@ -1,13 +1,6 @@
-.button {
-  padding: 1rem;
-  font-size: 2rem;
-  background-color: lightskyblue;
-  color: black;
-}
-
-.active {
-  padding: 1rem;
-  font-size: 2rem;
-  background-color: rgb(255, 85, 204);
-  color: black;
+.genreButton {
+  border-radius: 15px;
+  background: #313131;
+  padding: 0.5rem;
+  color: #fff;
 }

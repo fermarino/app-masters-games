@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '@/components/GenreButton/GenreButton.module.css';
+import Link from 'next/link';
 
 const GenreButton = ({ genre, isActive, onClick, allGenres }) => {
   const handleClick = () => {
@@ -7,14 +8,14 @@ const GenreButton = ({ genre, isActive, onClick, allGenres }) => {
   };
 
   return (
-    <button
+    <li
       className={`${isActive ? styles.active : styles.button} ${
         allGenres ? styles.allGenres : ''
       }`}
       onClick={handleClick}
     >
-      {allGenres ? 'All' : genre}
-    </button>
+      <Link href={'#'} className={styles.genreButton}>{genre}</Link>
+    </li>
   );
 };
 
