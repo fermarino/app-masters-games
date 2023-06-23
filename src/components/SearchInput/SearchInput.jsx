@@ -14,7 +14,7 @@ const SearchInput = ({ onSearch }) => {
       type="text"
       value={search}
       onChange={handleInputChange}
-      placeholder="Pesquise o jogo..."
+      placeholder="Pesquisar jogo"
     />
   );
 };

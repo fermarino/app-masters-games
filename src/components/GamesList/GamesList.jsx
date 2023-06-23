@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import styles from '@/components/GamesList/GamesList.module.css'
 
 import Game from '../Game/Game'
-import SearchInput from '../SearchField/SearchField'
+import SearchInput from '../SearchInput/SearchInput'
+import GenreButton from '../GenreButton/GenreButton'
 
 const GamesList = (props) => {
 
@@ -27,26 +28,37 @@ const GamesList = (props) => {
     setIsActive(genre);
   };
 
-  const filteredGamesGenre = filteredGames.filter((game) =>
-    isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
+  const filteredGamesGenre = filteredGames.filter(
+    (game) =>
+      isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
   );
 
   const handleSearch = (value) => {
     setSearch(value);
   }
 
+  const handleSelectAll = () => {
+    setIsActive('All');
+  }
+
   return (
     <>
       <SearchInput onSearch={handleSearch}/>
 
-      {filteredGenres.map((genre) => (
+      <GenreButton 
+        genre={'All'}
+        isActive={isActive === 'All'}
+        onClick={handleSelectAll}
+        allGenres
+      />
 
-        <button
+      {filteredGenres.map((genre) => (
+        <GenreButton
           key={genre}
-          className={isActive === genre ? styles.active : styles.button}
-          onClick={() => handleClickFilter(genre)}>
-          {genre}
-        </button>
+          genre={genre}
+          isActive={isActive === genre}
+          onClick={handleClickFilter}
+        />
       ))}
       <ul className={styles.gamesList}>
         {filteredGamesGenre.map((game) => (
