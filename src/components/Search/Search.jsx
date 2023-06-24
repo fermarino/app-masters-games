@@ -17,7 +17,7 @@ const Search = ({ onSearch }) => {
       type="text"
       value={search}
       onChange={handleInputChange}
-      placeholder="Pesquisar jogos"
+      placeholder="Pesquisar Jogos"
     />
   );
 };

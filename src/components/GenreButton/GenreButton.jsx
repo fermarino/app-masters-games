@@ -9,9 +9,6 @@ const GenreButton = ({ genre, isActive, onClick, allGenres }) => {
 
   return (
     <li
-      className={`${isActive ? styles.active : styles.button} ${
-        allGenres ? styles.allGenres : ''
-      }`}
       onClick={handleClick}
     >
       <Link href={'#'} className={styles.genreButton}>{genre}</Link>

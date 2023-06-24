@@ -7,10 +7,6 @@ import Menu from '@/components/Menu/Menu'
 
 const Header = ({ onSearch, genres, handleClickFilter}) => {
 
-  const [menu, setMenu] = useState(false)
-
-  const showMenu = () => setMenu(!menu)
-
   return (
     <header>
       <div className={styles.container}>
@@ -18,11 +14,10 @@ const Header = ({ onSearch, genres, handleClickFilter}) => {
         <Menu
             genres={genres}
             handleClickFilter={handleClickFilter}
+            onSearch={onSearch}
         />
         
         <h1 className={styles.logo}>MG</h1>
-
-        <SearchInput onSearch={onSearch} />
       </div>
     </header>
   );

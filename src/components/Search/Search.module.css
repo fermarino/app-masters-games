@@ -1,19 +1,23 @@
 .searchBar {
-  border-radius: 15px;
-  border: 2px solid #7d00b7;
-  background: #1e1e1e;
+  border-radius: 5px;
+  border: 1px solid #202020b3;
+  background: #212121;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   color: #fff;
+  
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 600;
   outline: none;
   padding: 0.5rem;
   
-  height: 2.3rem;
-  width: 15rem;
+  height: 2.5rem;
+  width: 90%;
+  margin: 0 auto;
+  margin-right: 2rem;
 }
 
 .searchBar::placeholder {
-  color: #868686;
+  color: #8f8f8f;
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 600;
 }

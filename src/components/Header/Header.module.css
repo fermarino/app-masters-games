@@ -1,33 +1,19 @@
 .container {
-  background: #1B1B1B;
-  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
-  
+  background-color: #151515;
+  box-shadow: 0px 4px 10px 0px rgba(70, 70, 70, 0.093);
+
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
-  
+
   width: 100vw;
-  height: 8rem;
+  height: 4.5rem;
   position: fixed;
 }
 
 .logo {
-  color: #9500DB;
+  color: #9500db;
   font-weight: 800;
-  font-size: 2.4rem;
+  font-size: 1.6rem;
 }
-
-.hamburguerMenu  {
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: white;
-    width: 30px;
-    height: 30px;
-    margin-top: 3.2rem;
-    margin-left: 3.2rem;
-    cursor: pointer;
-}
-
-

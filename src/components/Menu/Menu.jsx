@@ -1,37 +1,43 @@
-import React from 'react'
+
 import { FaTimes } from 'react-icons/fa'
 import { FaBars } from 'react-icons/fa'
 import styles from '@/components/Menu/Menu.module.css'
 import { useState } from 'react'
 
 import GenreButton from '../GenreButton/GenreButton'
+import Search from '../Search/Search'
 
-const Menu = ({ genres, handleClickFilter }) => {
+const Menu = ({ genres, handleClickFilter, onSearch }) => {
 
   const [menu, setMenu] = useState(false)
 
-  const showMenu = () => setMenu(!menu)
-
+  const toggleMenu = () => setMenu(!menu)
 
   return (
     <>
-      <div className={styles.navbar}>
-        <FaBars onClick={showMenu} className={styles.menuBars} />
+
+      <div className={styles.openMenu}>
+        <FaBars onClick={toggleMenu} className={styles.menuBars} />
       </div>
       <nav className={menu ? styles.navMenuActive : styles.navMenu}>
-        <ul className={styles.navMenuItens} onClick={showMenu}>
-          <li className={styles.navbarToggle}>
+
+        <div onClick={toggleMenu}>
+          <div className={styles.navbarToggle}>
             <FaTimes className={styles.menuBars} />
-          </li>
-            <GenreButton genre={'All'} onClick={handleClickFilter} />
-            {genres &&
-              genres.map((genre) => (
-                <GenreButton
-                  key={genre}
-                  genre={genre}
-                  onClick={handleClickFilter}
-                />
-              ))}
+          </div>
+        </div>
+        <ul className={styles.navMenuItens} onClick={toggleMenu}>
+
+          <Search onSearch={onSearch} />
+          <GenreButton genre={'All'} onClick={handleClickFilter} />
+          {genres &&
+            genres.map((genre) => (
+              <GenreButton
+                key={genre}
+                genre={genre}
+                onClick={handleClickFilter}
+              />
+            ))}
         </ul>
       </nav>
     </>
