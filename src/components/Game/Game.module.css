@@ -20,6 +20,7 @@
   justify-content: space-between;
   gap: 4rem;
   margin: 0 5px;
+  padding: 1.2rem 0;
 }
 
 .gameTitle {
@@ -53,7 +54,7 @@
 
 @media screen and (min-width: 988px) {
 	.cardGame {
-    width: 27%;
+    width: 29%;
     height: 500px;
   }
 }

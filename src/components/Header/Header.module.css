@@ -5,7 +5,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
 
   width: 100vw;
   height: 6rem;
@@ -17,3 +16,16 @@
   font-weight: 800;
   font-size: 1.6rem;
 }
+
+.desktopSearch {
+  display: none;
+  position: absolute;
+  right: 0;
+}
+
+@media screen and (min-width: 1024px) {
+  .desktopSearch {
+    display: block;
+  }
+}
+
