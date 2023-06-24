@@ -1,6 +1,8 @@
 'use client';
 
-import React from 'react';
+import { Suspense } from 'react';
+import styles from './page.module.css';
+
 import GamesData from '@/components/GameData/GamesData';
 import GamesList from '@/components/GamesList/GamesList';
 
@@ -8,7 +10,7 @@ const Home = () => {
   const { games, isLoading, error } = GamesData();
 
   if (isLoading) {
-    return <p>Carregando...</p>;
+    return <div className={styles.loader}></div>
   }
 
   if (error) {
@@ -21,7 +23,7 @@ const Home = () => {
     );
   }
 
-  return ;
+  return;
 };
 
 export default Home;

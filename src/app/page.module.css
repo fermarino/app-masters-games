@@ -1,0 +1,26 @@
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader::after {
+  content: '';
+  width: 60px;
+  height: 60px;
+  border: 15px solid #dddd;
+  border-top-color: #9500db;
+  border-radius: 50%;
+  animation: loading 0.75s ease infinite;
+}
+
+@keyframes loading {
+  from {transform: rotate(0turn)}
+  to {transform: rotate(1turn)}
+}
+
