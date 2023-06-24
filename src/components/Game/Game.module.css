@@ -1,30 +1,59 @@
-.cardContainer {
-  display: flex;
-}
-
 .cardGame {
-  border-radius: 8px;
-  border: 0.5px solid #a000eb;
   background: #151515;
+  border-radius: 8px;
+  border: 0.5px solid #272728;
   color: #fff;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  padding: 1rem;
   
-  max-width: 350px;
-  height: 500px;
+  width: 90%;
+  height: 470px;
 }
 
 .gameInfo {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 5rem;
-  padding: 2rem
+  justify-content: space-between;
+  gap: 4rem;
+  margin: 0 5px;
+}
+
+.gameTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.gameGenre {
+  color: #727272;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.gameImg {
+  width: 100%;
+  height: 100%;
 }
 
 .gameDesc {
+  font-size: 1.3rem;
   padding: 1rem;
   word-break: break-all;
+}
+
+
+@media screen and (min-width: 549px) and (max-width: 987px) {
+	.cardGame {
+    width: 45% ;
+  }
+}
+
+@media screen and (min-width: 988px) {
+	.cardGame {
+    width: 27%;
+    height: 500px;
+  }
 }

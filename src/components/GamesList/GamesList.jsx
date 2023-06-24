@@ -3,7 +3,6 @@ import styles from '@/components/GamesList/GamesList.module.css'
 
 import Game from '../Game/Game'
 import Header from '../Header/Header'
-import Menu from '../Menu/Menu'
 
 const GamesList = (props) => {
 
@@ -48,8 +47,6 @@ const GamesList = (props) => {
 
       <main>
         <div className={styles.container}>
-
-
           <div className={styles.gamesList}>
             {filteredGamesGenre.map((game) => (
               <Game

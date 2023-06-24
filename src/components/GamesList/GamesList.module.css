@@ -10,14 +10,3 @@
   gap: 3rem;
   overflow: hidden;
 }
-
-.genresContainer {
-  display: flex;
-  align-items: left;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin: 2rem auto;
-
-  width: 100vw;
-}

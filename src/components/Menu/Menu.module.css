@@ -2,16 +2,16 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   margin-top: 1.3rem;
-  margin-left: 3.2rem;
+  margin-right: 2rem;
   cursor: pointer;
 }
 
 
 .menuBars {
-  margin-left: 2rem;
+  margin-left: 1rem;
   font-size: 2rem;
   background: none;
   color: white;
@@ -49,9 +49,9 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2.5rem;
   margin-top: 7rem;
-  margin-left: 1rem;
+  margin-left: 1.2rem;
 }
 
 
@@ -59,9 +59,9 @@
 .navbarToggle {
   position: fixed;
   color: white;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   margin-top: 1.3rem;
-  margin-left: 3.2rem;
+  margin-right: 2rem;
   cursor: pointer
 }

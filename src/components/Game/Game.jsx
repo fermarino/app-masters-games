@@ -10,7 +10,10 @@ const Game = (props) => {
         <h2 className={styles.gameTitle}>{props.title}</h2>
         <h3 className={styles.gameGenre}>{props.genre}</h3>
       </div>
-      <Image src={props.thumbnail} alt={props.title} width={300} height={300} className={styles.gameImg}/>
+      <Image src={props.thumbnail} alt={props.title} className={styles.gameImg}
+        width={0}
+        height={0}
+        sizes="100vw" />
       <p className={styles.gameDesc}>{props.short_description}</p>
     </div>
   )
