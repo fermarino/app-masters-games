@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import styles from '@/components/GamesList/GamesList.module.css'
 
 import Game from '../Game/Game'
-import SearchInput from '../Search/Search'
-import GenreButton from '../GenreButton/GenreButton'
 import Header from '../Header/Header'
+import Menu from '../Menu/Menu'
 
 const GamesList = (props) => {
 
   const [search, setSearch] = useState('');
   const [isActive, setIsActive] = useState('All');
+
 
   const lowerSearch = search.toLowerCase();
 
@@ -38,42 +38,31 @@ const GamesList = (props) => {
     setSearch(value);
   }
 
-  const handleSelectAll = () => {
-    setIsActive('All');
-  }
 
   return (
     <>
-      <Header onSearch={handleSearch} />
+      <Header
+      onSearch={handleSearch}
+      genres={filteredGenres}
+      handleClickFilter={handleClickFilter}/>
 
-      <ul className={styles.genresContainer}>
-        <GenreButton
-          genre={'All'}
-          isActive={isActive === 'All'}
-          onClick={handleSelectAll}
-          allGenres
-        />
-        {filteredGenres.map((genre) => (
-          <GenreButton
-            key={genre}
-            genre={genre}
-            isActive={isActive === genre}
-            onClick={handleClickFilter}
-          />
-        ))}
-      </ul>
+      <main>
+        <div className={styles.container}>
 
-      <div className={styles.gamesList}>
-        {filteredGamesGenre.map((game) => (
-          <Game
-            key={game.id}
-            title={game.title}
-            genre={game.genre}
-            thumbnail={game.thumbnail}
-            short_description={game.short_description}
-          />
-        ))}
-      </div>
+
+          <div className={styles.gamesList}>
+            {filteredGamesGenre.map((game) => (
+              <Game
+                key={game.id}
+                title={game.title}
+                genre={game.genre}
+                thumbnail={game.thumbnail}
+                short_description={game.short_description}
+              />
+            ))}
+          </div>
+        </div>
+      </main>
     </>
   )
 }

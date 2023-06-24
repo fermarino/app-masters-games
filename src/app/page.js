@@ -1,8 +1,9 @@
-"use client"
+'use client';
 
 import React from 'react';
 import GamesData from '@/components/GameData/GamesData';
 import GamesList from '@/components/GamesList/GamesList';
+import Menu from '@/components/Menu/Menu';
 
 const Home = () => {
   const { games, isLoading, error } = GamesData();
@@ -17,7 +18,8 @@ const Home = () => {
 
   if (games.length > 0) {
     return (
-    <GamesList games={games} />);
+        <GamesList games={games} />
+    );
   }
 
   return null;

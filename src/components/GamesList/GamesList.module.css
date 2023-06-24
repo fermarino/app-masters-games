@@ -1,10 +1,13 @@
+.container {
+  margin-top: 8rem;
+}
+
 .gamesList {
-  background-color: #ccc;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .genresContainer {

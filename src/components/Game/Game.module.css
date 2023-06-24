@@ -3,7 +3,28 @@
 }
 
 .cardGame {
-  background-color: plum;
+  border-radius: 8px;
+  border: 0.5px solid #a000eb;
+  background: #151515;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  
   width: 400px;
-  height: 400px;
+  height: 500px;
+}
+
+.gameInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 5rem;
+  padding: 2rem
+}
+
+.gameDesc {
+  padding: 1rem;
+  word-break: break-all;
 }
