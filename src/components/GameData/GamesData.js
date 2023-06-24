@@ -7,10 +7,10 @@ const gamesApi = 'https://games-test-api-81e9fb0d564a.herokuapp.com/api/data';
 const GamesData = () => {
   const [games, setGames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
   const fetchGames = async () => {
-    setError(null);
+    setError('');
     const start = performance.now();
 
     try {
@@ -25,7 +25,7 @@ const GamesData = () => {
       console.log(`A chamada durou: ${time}ms`); // verificar duração - apagar dps
 
       if (time > 5000) {
-        throw new Error('O servidor demorou para responder, tente mais tarde');
+        throw new Error('O servidor demorou para responder, tente mais tarde.');
       }
 
       if (
@@ -38,16 +38,15 @@ const GamesData = () => {
         response.status === 509
       ) {
         console.log(response.status); // verificar status do erro - apagar depois
-        throw new Error('O servidor falhou em responder, tente recarregar a página');
+        throw new Error('O servidor falhou em responder, tente recarregar a página.');
       } else if (!response.ok) {
         console.log(response.status);
-        throw new Error('O servidor não conseguiu responder por agora, tente novamente mais tarde');
+        throw new Error('O servidor não conseguiu responder por agora, tente novamente mais tarde.');
       }
 
       const data = await response.json();
 
       setGames(data);
-      console.log(data); // exibir dados - apagar depois.
     } catch (error) {
       setError(error.message);
     } finally {

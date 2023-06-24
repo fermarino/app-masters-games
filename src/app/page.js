@@ -1,6 +1,5 @@
 'use client';
 
-import { Suspense } from 'react';
 import styles from './page.module.css';
 
 import GamesData from '@/components/GameData/GamesData';
@@ -14,7 +13,7 @@ const Home = () => {
   }
 
   if (error) {
-    return <span>{error}</span>;
+    return <span className={styles.customError}>{error}</span>;
   }
 
   if (games.length > 0) {

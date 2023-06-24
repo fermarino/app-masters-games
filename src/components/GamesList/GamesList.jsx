@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import styles from '@/components/GamesList/GamesList.module.css'
+import styles from './GamesList.module.css'
 
 import Game from '../Game/Game'
 import Header from '../Header/Header'
+import BackToTop from '../BackToTop/BackToTop'
 
 const GamesList = (props) => {
 
@@ -57,6 +58,7 @@ const GamesList = (props) => {
                 short_description={game.short_description}
               />
             ))}
+            <BackToTop/>
           </div>
         </div>
       </main>
