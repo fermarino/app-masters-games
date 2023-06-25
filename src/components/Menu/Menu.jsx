@@ -23,6 +23,10 @@ const Menu = ({ genres, handleClickFilter, onSearch }) => {
           </div>
         </div>
 
+        <div className={styles.menuSearch}>
+          <Search onSearch={onSearch} />
+        </div>
+        
         <ul className={styles.navMenuItens} onClick={toggleMenu}>
 
 
@@ -36,9 +40,6 @@ const Menu = ({ genres, handleClickFilter, onSearch }) => {
               />
             ))}
         </ul>
-        <div className={styles.menuSearch}>
-          <Search onSearch={onSearch} />
-        </div>
       </nav>
     </>
   );
