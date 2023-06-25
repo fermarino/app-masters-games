@@ -1,5 +1,5 @@
 .container {
-  background-color: #151515;
+  background-color: var(--dark-primary-color);
   box-shadow: 0px 4px 10px 0px rgba(70, 70, 70, 0.093);
 
   display: flex;
@@ -9,12 +9,6 @@
   width: 100vw;
   height: 6rem;
   position: fixed;
-}
-
-.logo {
-  color: #9500db;
-  font-weight: 800;
-  font-size: 1.6rem;
 }
 
 .desktopSearch {

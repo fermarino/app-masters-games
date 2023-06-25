@@ -1,7 +1,7 @@
 .cardGame {
-  background: #151515;
+  background: var(--dark-primary-color);
   border-radius: 8px;
-  border: 0.5px solid #272728;
+  border: 0.5px solid var(--light-grey-border);
   color: #fff;
   
   display: flex;
@@ -29,7 +29,7 @@
 }
 
 .gameGenre {
-  color: #727272;
+  color: var(--font-color);
   font-size: 1rem;
   font-weight: 600;
 }

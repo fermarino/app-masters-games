@@ -1,14 +1,11 @@
-
-import { FaTimes } from 'react-icons/fa'
-import { FaBars } from 'react-icons/fa'
-import styles from '@/components/Menu/Menu.module.css'
+import { FaTimes, FaBars } from 'react-icons/fa';
+import styles from './Menu.module.css'
 import { useState } from 'react'
 
 import GenreButton from '../GenreButton/GenreButton'
 import Search from '../Search/Search'
 
 const Menu = ({ genres, handleClickFilter, onSearch }) => {
-
   const [menu, setMenu] = useState(false)
 
   const toggleMenu = () => setMenu(!menu)
@@ -20,15 +17,15 @@ const Menu = ({ genres, handleClickFilter, onSearch }) => {
         <FaBars onClick={toggleMenu} className={styles.menuBars} />
       </div>
       <nav className={menu ? styles.navMenuActive : styles.navMenu}>
-
         <div onClick={toggleMenu}>
           <div className={styles.navbarToggle}>
             <FaTimes className={styles.menuBars} />
           </div>
         </div>
+        
         <ul className={styles.navMenuItens} onClick={toggleMenu}>
+        
 
-          <Search onSearch={onSearch} />
           <GenreButton genre={'All'} onClick={handleClickFilter} />
           {genres &&
             genres.map((genre) => (
@@ -39,6 +36,9 @@ const Menu = ({ genres, handleClickFilter, onSearch }) => {
               />
             ))}
         </ul>
+        <div className={styles.menuSearch}>
+          <Search onSearch={onSearch} />
+        </div>
       </nav>
     </>
   );

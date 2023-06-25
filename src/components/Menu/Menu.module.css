@@ -19,7 +19,7 @@
 
 
 .navMenu {
-  background-color: #151515;
+  background-color: var(--dark-primary-color);
   width: 250px;
   height: 100vh;
   display: flex;
@@ -31,7 +31,7 @@
 }
 
 .navMenuActive {
-  background-color: #151515;
+  background-color: var(--dark-primary-color);
   width: 250px;
   height: 100vh;
   display: flex;
@@ -47,10 +47,10 @@
 
 .navMenuItens {
   font-weight: 600;
-  margin-top: 7rem;
   margin-left: 1.6rem;
   display: flex;
   flex-direction: column;
+  justify-content:center;
   gap: 2rem;
   width: 100%;
 }
@@ -65,4 +65,16 @@
   margin-top: 2rem;
   margin-left: 2rem;
   cursor: pointer
+}
+
+.menuSearch {
+  position: absolute;
+  height: 100vh;
+  top: 7.5rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .menuSearch {
+    display: none;
+  }
 }

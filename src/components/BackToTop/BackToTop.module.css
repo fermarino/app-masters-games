@@ -10,7 +10,7 @@
 }
 
 .toTopBtn {
-  background-color: #212121;
+  background-color: var(--primary-color);
   border: 2px solid #fff;
   border-radius: 50%;
   color: #fff;
@@ -25,9 +25,9 @@
 
 .toTopBtn:hover {
   animation: none;
-  background-color: #131313;
-  color: #850096;
-  border: 2px solid #850096;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
 }
 
 @keyframes movebtn {
