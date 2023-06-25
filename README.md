@@ -16,7 +16,8 @@ O projeto possui recursos como carregamento de dados, apresentação responsiva,
 
 ## Screenshots
 
-![App Screenshot] (https://imgur.com/a/OWPxtOo)
+<img src="https://imgur.com/gallery/AhQGstb" alt="Página inicial"/>
+<img src="https://imgur.com/gallery/gxwXsLr" alt="Menu lateral"/>
 ##
 
 ## Funcionalidades
