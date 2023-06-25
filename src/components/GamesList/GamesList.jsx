@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './GamesList.module.css'
 
 import Game from '../Game/Game'
@@ -13,9 +13,12 @@ const GamesList = (props) => {
 
   const lowerSearch = search.toLowerCase();
 
-  const filteredGames = props.games.filter((game) => game.title.toLowerCase().includes(lowerSearch))
+  const handleSearch = (value) => {
+    setSearch(value);
+  }
 
-  //Requisições do Botão
+
+  const filteredGames = props.games.filter((game) => game.title.toLowerCase().includes(lowerSearch))
 
   const filteredGenres = props.games.reduce((genres, game) => {
     if (!genres.includes(game.genre)) {
@@ -34,17 +37,14 @@ const GamesList = (props) => {
       isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
   );
 
-  const handleSearch = (value) => {
-    setSearch(value);
-  }
 
 
   return (
     <>
       <Header
-      onSearch={handleSearch}
-      genres={filteredGenres}
-      handleClickFilter={handleClickFilter}/>
+        onSearch={handleSearch}
+        genres={filteredGenres}
+        handleClickFilter={handleClickFilter} />
 
       <main>
         <div className={styles.container}>
@@ -58,7 +58,7 @@ const GamesList = (props) => {
                 short_description={game.short_description}
               />
             ))}
-            <BackToTop/>
+            <BackToTop />
           </div>
         </div>
       </main>

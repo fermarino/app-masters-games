@@ -1,18 +1,21 @@
-import './globals.css'
-import { Poppins } from 'next/font/google'
+import './globals.css';
+import { Poppins } from 'next/font/google';
+import Head from 'next/head';
 
-const poppins = Poppins({ subsets: ['latin'],
-weight: ["400", "500", "600", "700", "800", "900"] })
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+});
 
 export const metadata = {
   title: 'Masters Games',
-  description: 'Página oficial da Masters Games',
-}
+  description: 'Site oficial Masters Games',
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>{children}</body>
     </html>
-  )
+  );
 }

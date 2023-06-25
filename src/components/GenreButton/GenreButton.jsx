@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from '@/components/GenreButton/GenreButton.module.css';
+import styles from './GenreButton.module.css';
 import Link from 'next/link';
 
 const GenreButton = ({ genre, isActive, onClick, allGenres }) => {

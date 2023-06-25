@@ -22,7 +22,6 @@ const GamesData = () => {
 
       const end = performance.now();
       const time = end - start;
-      console.log(`A chamada durou: ${time}ms`); // verificar duração - apagar dps
 
       if (time > 5000) {
         throw new Error('O servidor demorou para responder, tente mais tarde.');
@@ -37,7 +36,6 @@ const GamesData = () => {
         response.status === 508 ||
         response.status === 509
       ) {
-        console.log(response.status); // verificar status do erro - apagar depois
         throw new Error('O servidor falhou em responder, tente recarregar a página.');
       } else if (!response.ok) {
         console.log(response.status);

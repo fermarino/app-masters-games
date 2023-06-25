@@ -1,6 +1,4 @@
-import React from 'react'
-
-import styles from '@/components/Game/Game.module.css'
+import styles from './Game.module.css'
 import Image from 'next/image'
 
 const Game = (props) => {
