@@ -50,8 +50,9 @@
   margin-left: 1.6rem;
   display: flex;
   flex-direction: column;
-  justify-content:center;
-  gap: 2rem;
+  justify-content: flex-end;
+  margin-bottom: 3rem;
+  gap: 1.7rem;
   width: 100%;
 }
 
@@ -69,12 +70,17 @@
 
 .menuSearch {
   position: absolute;
-  height: 100vh;
-  top: 7.5rem;
+  top: 7rem;
 }
 
 @media screen and (min-width: 1024px) {
   .menuSearch {
     display: none;
   }
+
+  .navMenuItens {
+    justify-content: center;
+    gap: 2rem;
+  }
+
 }

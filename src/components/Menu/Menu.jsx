@@ -22,9 +22,9 @@ const Menu = ({ genres, handleClickFilter, onSearch }) => {
             <FaTimes className={styles.menuBars} />
           </div>
         </div>
-        
+
         <ul className={styles.navMenuItens} onClick={toggleMenu}>
-        
+
 
           <GenreButton genre={'All'} onClick={handleClickFilter} />
           {genres &&
