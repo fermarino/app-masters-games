@@ -48,12 +48,10 @@
 .navMenuItens {
   font-weight: 600;
   margin-left: 1.6rem;
-  
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-top: 4.8rem;
-  gap: 1.5rem;
+  justify-content:center;
+  gap: 2rem;
   width: 100%;
 }
 
@@ -70,8 +68,9 @@
 }
 
 .menuSearch {
-  position: fixed;
-  top: 4.8rem;
+  position: absolute;
+  height: 100vh;
+  top: 7.5rem;
 }
 
 @media screen and (min-width: 1024px) {
