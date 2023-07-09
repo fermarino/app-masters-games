@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './LoginForm.module.css';
 import Input from '../Input/Input';
+import Button from '../Button/Button';
 
 const LoginForm = () => {
   return (
@@ -18,7 +19,9 @@ const LoginForm = () => {
         onChange=''
         required='required'
       />
-      <button className={styles.loginButton} type='submit'>Entrar</button>
+      <Button
+        onClick=''
+      >Entrar</Button>
     </form>
   )
 }
