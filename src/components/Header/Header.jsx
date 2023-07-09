@@ -4,6 +4,7 @@ import Menu from '@/components/Menu/Menu'
 import Search from '../Search/Search';
 import Image from 'next/image';
 import Logo from '../../../public/logo.svg'
+import LoginButton from '../LoginButton/LoginButton';
 
 
 const Header = ({ onSearch, genres, handleClickFilter }) => {
@@ -21,6 +22,7 @@ const Header = ({ onSearch, genres, handleClickFilter }) => {
             <Image src={Logo} alt='Logo do Masters Games'/>
           <div className={styles.desktopSearch}>
             <Search onSearch={onSearch} />
+            <LoginButton/>
           </div>
         </div>
       </header>
