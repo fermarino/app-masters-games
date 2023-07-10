@@ -1,47 +1,41 @@
 .form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
   border-radius: 8px;
+  gap: 2.4rem;
+  padding: 20px;
+  margin: 0 auto;
+  
+  min-width: 400px;
+  max-height: 700px;
+}
+
+.title {
+  color: #fff;
+  margin-top: 1rem;
+  font-size: 2.4rem;
 }
 
 .formGroup {
-  margin-bottom: 20px;
-}
-
-.formGroup .label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.formGroup .input {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.btn {
-  display: inline-block;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  background-color: #0070f3;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
+
+.registerLink {
+  color: var(--font-color);
+  font-size: 1.1rem;
 }
 
-.btnGoogle {
-  background-color: #db4a39;
-  margin-left: 8px;
+.createButton {
+  font-size: 1.1rem;
+  color: var(--secondary-color);
 }
 
-.loginLink {
-  margin-top: 16px;
-  text-align: center;
+.createButton:hover {
+  text-decoration: underline;
 }

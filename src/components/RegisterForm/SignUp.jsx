@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styles from './SignUp.module.css';
+import Button from '../Button/Button';
+import Input from '../Input/Input';
+import Link from 'next/link';
 
 export default function Register({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -8,7 +11,7 @@ export default function Register({ onLogin }) {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    // Lógica para realizar o registro
+    // lógica para realizar o registro
     console.log('Email:', email);
     console.log('Senha:', password);
     console.log('Confirmars senha:', confirmPassword);
@@ -16,51 +19,41 @@ export default function Register({ onLogin }) {
 
   return (
     <form className={styles.form} onSubmit={handleRegister}>
-      <h2>Crie sua conta</h2>
+      <h2 className={styles.title}>Crie sua conta</h2>
+      <Button>
+          Criar com o Google
+      </Button>
       <div className={styles.formGroup}>
-        <label className={styles.label} htmlFor="email">Email:</label>
-        <input
-          className={styles.input}
-          type="email"
-          id="email"
-          value={email}
+      <Input
+          label='Email'
+          type='email'
           onChange={(e) => setEmail(e.target.value)}
         />
-      </div>
-      <div className={styles.formGroup}>
-        <label className={styles.label} htmlFor="password">Senha:</label>
-        <input
-          className={styles.input}
-          type="password"
-          id="password"
-          value={password}
+        <Input
+          label='Senha'
+          type='password'
           onChange={(e) => setPassword(e.target.value)}
+          required='required'
         />
-      </div>
-      <div className={styles.formGroup}>
-        <label className={styles.label} htmlFor="confirmPassword">Confirmar senha:</label>
-        <input
-          className={styles.input}
-          type="password"
-          id="confirmPassword"
-          value={confirmPassword}
+        <Input
+          label='Confirmar senha'
+          type='password'
           onChange={(e) => setConfirmPassword(e.target.value)}
+          required='required'
         />
       </div>
-      <button type="submit" className={styles.btn}>
+      <Button type="submit">
         Criar conta
-      </button>
-      <button
-        type="button"
-        className={`${styles.btn} ${styles.btngoogle}`}
-      >
-        Registrar com o Google
-      </button>
-      <div className={styles.loginLink}>
-        Não possui uma conta?{' '}
-        <button type="button" onClick={onLogin}>
-          Login
-        </button>
+      </Button>
+      <div className={styles.registerLink}>
+        Já possui uma conta?{' '}
+        <Link
+          className={styles.createButton}
+          href=''
+          onClick={onLogin}
+        >
+          Entre na sua conta
+        </Link>
       </div>
     </form>
   );
