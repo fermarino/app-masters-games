@@ -1,15 +1,22 @@
 .label {
+  color: #fff;
   display: block;
-  margin-bottom: 0.8rem;
-  font-weight: bold;
-  font-size: 1.4rem;
-  color: #fff;;
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin: 1rem 0;
 }
 
 .input {
-  width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ccc;
+  background-color: #2B2B2B;
+  border: 1px solid var(--light-grey-border);
   border-radius: 5px;
-  font-size: 1.4rem;
+  color: #fff;
+  font-size: 1.6rem;
+  padding: 16px;
+  width: 100%;
+}
+
+.input:focus {
+  border: 1px solid var(--secondary-color);
+  outline: none;
 }

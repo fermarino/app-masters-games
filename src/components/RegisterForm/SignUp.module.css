@@ -1,18 +1,47 @@
-.registerForm {
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  padding: 24px;
-  margin: 0 auto;
+.form {
   max-width: 400px;
-  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
 }
 
-.formTitle {
-  color: #fff;
-  font-size: 2.4rem;
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup .label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.formGroup .input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 16px;
-  margin-top: 0;
+  text-decoration: none;
+  background-color: #0070f3;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btnGoogle {
+  background-color: #db4a39;
+  margin-left: 8px;
+}
+
+.loginLink {
+  margin-top: 16px;
+  text-align: center;
 }

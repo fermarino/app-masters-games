@@ -1,8 +1,6 @@
 .container {
-  background-color: #ccc;
-  color: purple;
-  font-size: 2.3rem;
-  height: 100vh;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
-
