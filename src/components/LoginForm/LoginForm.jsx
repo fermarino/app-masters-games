@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
+import { auth } from '../../config/firebase';
+
 import styles from './LoginForm.module.css';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import Link from 'next/link';
 
 export default function Login({ onRegister }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // lógica para realizar o login
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
 
   return (
     <form className={styles.form} onSubmit={handleLogin}>
