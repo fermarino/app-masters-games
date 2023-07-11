@@ -4,10 +4,29 @@ import Menu from '@/components/Menu/Menu'
 import Search from '../Search/Search';
 import Image from 'next/image';
 import Logo from '../../../public/logo.svg'
-import LoginButton from '../LoginButton/LoginButton';
+
+import { useRouter } from 'next/navigation';
+import { auth } from '@/config/firebase';
 
 
-const Header = ({ onSearch, genres, handleClickFilter }) => {
+const Header = ({ onSearch, genres, handleClickFilter, user }) => {
+
+  const router = useRouter();
+
+  const handleFavorites = () => {
+    if (user) {
+      router.push('/favorites');
+    } else {
+      router.push('/login');
+    }
+  };
+
+  const handleLogout = () => {
+    auth.signOut().then(() => {
+      setUser(null);
+      router.push('/');
+    });
+  };
 
   return (
     <>
@@ -22,7 +41,14 @@ const Header = ({ onSearch, genres, handleClickFilter }) => {
             <Image src={Logo} alt='Logo do Masters Games'/>
           <div className={styles.desktopSearch}>
             <Search onSearch={onSearch} />
-            <LoginButton/>
+            {user ? (
+            <>
+              <button onClick={handleFavorites}>Favoritos</button>
+              <button onClick={handleLogout}>Sair</button>
+            </>
+          ) : (
+            <button onClick={handleFavorites}>Entre na sua conta</button>
+          )}
           </div>
         </div>
       </header>

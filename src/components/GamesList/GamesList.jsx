@@ -5,7 +5,7 @@ import Game from '../Game/Game'
 import Header from '../Header/Header'
 import BackToTop from '../BackToTop/BackToTop'
 
-const GamesList = (props) => {
+const GamesList = ({ games, user, onFavorite }) => {
 
   const [search, setSearch] = useState('');
   const [isActive, setIsActive] = useState('All');
@@ -18,9 +18,9 @@ const GamesList = (props) => {
   }
 
 
-  const filteredGames = props.games.filter((game) => game.title.toLowerCase().includes(lowerSearch))
+  const filteredGames = games.filter((game) => game.title.toLowerCase().includes(lowerSearch))
 
-  const filteredGenres = props.games.reduce((genres, game) => {
+  const filteredGenres = games.reduce((genres, game) => {
     if (!genres.includes(game.genre)) {
       genres.push(game.genre);
     }
@@ -37,14 +37,15 @@ const GamesList = (props) => {
       isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
   );
 
-
+  const favoriteGames = user ? user.favorites || [] : [];
 
   return (
     <>
       <Header
         onSearch={handleSearch}
         genres={filteredGenres}
-        handleClickFilter={handleClickFilter} />
+        handleClickFilter={handleClickFilter} 
+        user={user}/>
 
       <main>
         <div className={styles.container}>
@@ -56,6 +57,8 @@ const GamesList = (props) => {
                 genre={game.genre}
                 thumbnail={game.thumbnail}
                 short_description={game.short_description}
+                isFavorite={favoriteGames.includes(game.id)}
+                onFavorite={() => onFavorite(game.id)}
               />
             ))}
             <BackToTop />

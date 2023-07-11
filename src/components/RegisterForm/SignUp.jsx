@@ -1,4 +1,7 @@
+
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 import { auth } from '../../config/firebase';
 import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
@@ -14,6 +17,8 @@ export default function Register({ onLogin }) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
+  const router = useRouter();
+
   const handleSignUp = async () => {
     if (!email || !password || !username) return;
     try {
@@ -22,6 +27,7 @@ export default function Register({ onLogin }) {
       await updateProfile(auth.currentUser, {
         displayName: username
       })
+      router.push('/login')
     } catch (error) {
       console.error(error)
     }
@@ -30,7 +36,7 @@ export default function Register({ onLogin }) {
   const signUpWithGoogle = async () => {
     try {
       const user = await signInWithPopup(auth, provider)
-      console.log(user)
+      router.push('/login')
     } catch (error) {
       console.error(error)
     }
@@ -71,7 +77,7 @@ export default function Register({ onLogin }) {
         Já possui uma conta?{' '}
         <Link
           className={styles.createButton}
-          href=''
+          href='/login'
           onClick={onLogin}
         >
           Entre na sua conta

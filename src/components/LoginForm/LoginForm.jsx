@@ -1,4 +1,8 @@
+'use client'
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+
 import { auth } from '../../config/firebase';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
@@ -9,26 +13,30 @@ import Link from 'next/link';
 
 const provider = new GoogleAuthProvider();
 
-export default function Login({ onRegister }) {
+const LoginForm = ({ onRegister }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [loginError, setLoginError] = useState(null);
+
+  const router = useRouter()
 
   const handleLogin = async () => {
     if (!email || !password) return;
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user)
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push('/')
+      
     } catch (error) {
-      console.error(error)
+      setLoginError('Falha ao entrar na conta. Verifique seu email e senha.');
     }
   }
 
   const signInWithGoogle = async () => {
     try {
-      const user = await signInWithPopup(auth, provider)
-      console.log(user)
+      await signInWithPopup(auth, provider);
+      router.push('/')
     } catch (error) {
-      console.error(error)
+      setLoginError('Falha ao fazer login com o Google.');
     }
   }
   return (
@@ -50,6 +58,7 @@ export default function Login({ onRegister }) {
           required='required'
         />
       </div>
+      {loginError && <p>{loginError}</p>}
       <Button type="submit" onClick={handleLogin} >
         Entrar
       </Button>
@@ -57,7 +66,7 @@ export default function Login({ onRegister }) {
         Não possui uma conta?{' '}
         <Link
           className={styles.createButton}
-          href=''
+          href='./register'
           onClick={onRegister}
         >
           Criar conta
@@ -66,3 +75,5 @@ export default function Login({ onRegister }) {
     </form>
   );
 }
+
+export default LoginForm;
