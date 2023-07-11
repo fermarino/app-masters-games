@@ -15,7 +15,7 @@ export default function Register({ onLogin }) {
   const [password, setPassword] = useState(null);
 
   const handleSignUp = async () => {
-    if(!email || !password || !username) return;
+    if (!email || !password || !username) return;
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       console.log(user)
@@ -28,15 +28,19 @@ export default function Register({ onLogin }) {
   };
 
   const signUpWithGoogle = async () => {
-    const user = await signInWithPopup(auth, provider)
-    console.log(user)
+    try {
+      const user = await signInWithPopup(auth, provider)
+      console.log(user)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
     <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
       <h2 className={styles.title}>Crie sua conta</h2>
       <Button onClick={signUpWithGoogle}>
-          Criar com o Google
+        Criar com o Google
       </Button>
       <div className={styles.formGroup}>
         <Input
@@ -45,7 +49,7 @@ export default function Register({ onLogin }) {
           onChange={(e) => setUsername(e.target.value)}
           required='required'
         />
-      <Input
+        <Input
           required='required'
           label='Email'
           type='email'
