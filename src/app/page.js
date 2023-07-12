@@ -15,35 +15,41 @@ import {
   updateDoc
 } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
-import LoginForm from '@/components/LoginForm/LoginForm';
-import Register from '@/components/RegisterForm/SignUp';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
   const [user, setUser] = useState(null);
-  const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
-  const [isSignupFormVisible, setIsSignupFormVisible] = useState(false);
+  const [favoriteGames, setFavoriteGames] = useState([]);
+  
   const { games, isLoading, error } = GamesData();
   const hasGames = games.length > 0;
 
   const router = useRouter();
 
+  const fetchFavoriteGames = async (userId) => {
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const favorites = userDoc.data().favorites || [];
+      setFavoriteGames(favorites);
+    } else {
+      setFavoriteGames([]);
+    }
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, currentUser => {
       if (currentUser) {
         setUser(currentUser);
+        fetchFavoriteGames(currentUser.uid);
       } else {
         setUser(null);
+        setFavoriteGames([]); 
       }
     });
   }, []);
 
-  const handleLogout = () => {
-    auth.signOut().then(() => {
-      setUser(null);
-      router.push('/');
-    });
-  };
 
   const handleFavorite = async gameId => {
     if (!user) {
@@ -62,10 +68,12 @@ const Home = () => {
         await updateDoc(userRef, {
           favorites: arrayRemove(gameId)
         });
+        setFavoriteGames(favorites.filter(id => id !== gameId));
       } else {
         await updateDoc(userRef, {
           favorites: arrayUnion(gameId)
         });
+        setFavoriteGames([...favorites, gameId]);
       }
     } else {
       await setDoc(userRef, {
@@ -73,6 +81,7 @@ const Home = () => {
         name: user.displayName,
         favorites: [gameId]
       });
+      setFavoriteGames([gameId]);
     }
   };
 
@@ -84,7 +93,7 @@ const Home = () => {
     return <span className={styles.customError}>{error}</span>;
   }
 
-  return <GamesList games={games} user={user} onFavorite={handleFavorite} />;
+  return <GamesList games={games} user={user} onFavorite={handleFavorite} favoriteGames={favoriteGames} />;
 };
 
 export default Home;

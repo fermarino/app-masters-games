@@ -36,9 +36,18 @@
 
 .favoriteButton {
   background: none;
+  font-size: 2.4rem;
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+.favoriteIcon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.favoriteIcon:hover {
+  transform: scale(1.2);
 }
 
 .favoriteFilled {
@@ -46,7 +55,7 @@
 }
 
 .favoriteOutline {
-  color: black;
+  color: #fff;
 }
 
 

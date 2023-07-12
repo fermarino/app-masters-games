@@ -5,7 +5,7 @@ import Game from '../Game/Game'
 import Header from '../Header/Header'
 import BackToTop from '../BackToTop/BackToTop'
 
-const GamesList = ({ games, user, onFavorite }) => {
+const GamesList = ({ games, user, onFavorite, favoriteGames }) => {
 
   const [search, setSearch] = useState('');
   const [isActive, setIsActive] = useState('All');
@@ -37,7 +37,7 @@ const GamesList = ({ games, user, onFavorite }) => {
       isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
   );
 
-  const favoriteGames = user && user.favorites ? user.favorites : [];
+  const favoriteGamesList = favoriteGames || [];
 
   return (
     <>
@@ -57,7 +57,7 @@ const GamesList = ({ games, user, onFavorite }) => {
                 genre={game.genre}
                 thumbnail={game.thumbnail}
                 short_description={game.short_description}
-                isFavorite={favoriteGames.includes(game.id)}
+                isFavorite={favoriteGamesList.includes(game.id)}
                 onFavorite={() => onFavorite(game.id)}
                 user={user}
               />

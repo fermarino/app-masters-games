@@ -7,8 +7,14 @@ const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavori
   const [isFavoriteGame, setIsFavoriteGame] = useState(isFavorite);
 
   useEffect(() => {
-    setIsFavoriteGame(isFavorite);
-  }, [isFavorite]);
+    setIsFavoriteGame(prevIsFavorite => {
+      if (prevIsFavorite !== isFavorite) {
+        return isFavorite
+      }
+      return prevIsFavorite
+    })
+  }, [isFavorite])
+
 
   const handleFavorite = () => {
     if (!user) {
@@ -17,7 +23,7 @@ const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavori
     }
 
     onFavorite();
-    setIsFavoriteGame(!isFavoriteGame);
+    setIsFavoriteGame(prevIsFavorite => !prevIsFavorite)
   };
 
   return (
@@ -27,7 +33,7 @@ const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavori
         <h3 className={styles.gameGenre}>{genre}</h3>
         <button onClick={handleFavorite} className={styles.favoriteButton}>
           {isFavoriteGame ? (
-            <FaHeart className={styles.favoriteFilled} />
+            <FaHeart className={`${styles.favoriteIcon} ${styles.favoriteFilled}`} />
           ) : (
             <FaRegHeart className={styles.favoriteOutline} />
           )}
