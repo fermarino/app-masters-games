@@ -34,6 +34,22 @@
   font-weight: 600;
 }
 
+.favoriteButton {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.favoriteFilled {
+  color: red;
+}
+
+.favoriteOutline {
+  color: black;
+}
+
+
 .gameImg {
   width: 100%;
   height: 100%;

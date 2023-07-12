@@ -38,14 +38,6 @@ const Home = () => {
     });
   }, []);
 
-  const handleLogin = () => {
-    setIsLoginFormVisible(true);
-  };
-
-  const handleSignup = () => {
-    setIsSignupFormVisible(true);
-  };
-
   const handleLogout = () => {
     auth.signOut().then(() => {
       setUser(null);

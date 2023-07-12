@@ -7,14 +7,16 @@ import Logo from '../../../public/logo.svg'
 
 import { useRouter } from 'next/navigation';
 import { auth } from '@/config/firebase';
+import { useState } from 'react';
 
 
 const Header = ({ onSearch, genres, handleClickFilter, user }) => {
 
+  const [loggedUser, setLoggedUser] = useState(user);
   const router = useRouter();
 
   const handleFavorites = () => {
-    if (user) {
+    if (loggedUser) {
       router.push('/favorites');
     } else {
       router.push('/login');
@@ -23,7 +25,7 @@ const Header = ({ onSearch, genres, handleClickFilter, user }) => {
 
   const handleLogout = () => {
     auth.signOut().then(() => {
-      setUser(null);
+      setLoggedUser(null);
       router.push('/');
     });
   };
@@ -41,7 +43,7 @@ const Header = ({ onSearch, genres, handleClickFilter, user }) => {
             <Image src={Logo} alt='Logo do Masters Games'/>
           <div className={styles.desktopSearch}>
             <Search onSearch={onSearch} />
-            {user ? (
+            {loggedUser ? (
             <>
               <button onClick={handleFavorites}>Favoritos</button>
               <button onClick={handleLogout}>Sair</button>

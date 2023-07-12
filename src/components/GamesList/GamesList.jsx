@@ -37,7 +37,7 @@ const GamesList = ({ games, user, onFavorite }) => {
       isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
   );
 
-  const favoriteGames = user ? user.favorites || [] : [];
+  const favoriteGames = user && user.favorites ? user.favorites : [];
 
   return (
     <>
@@ -59,6 +59,7 @@ const GamesList = ({ games, user, onFavorite }) => {
                 short_description={game.short_description}
                 isFavorite={favoriteGames.includes(game.id)}
                 onFavorite={() => onFavorite(game.id)}
+                user={user}
               />
             ))}
             <BackToTop />
