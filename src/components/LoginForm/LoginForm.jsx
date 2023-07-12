@@ -66,7 +66,7 @@ const LoginForm = ({ onRegister }) => {
         Não possui uma conta?{' '}
         <Link
           className={styles.createButton}
-          href='./register'
+          href=''
           onClick={onRegister}
         >
           Criar conta

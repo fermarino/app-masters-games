@@ -3,14 +3,13 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { auth } from '../../config/firebase';
-import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 
-import styles from './SignUp.module.css';
+import styles from './RegisterForm.module.css';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import Link from 'next/link';
 
-const provider = new GoogleAuthProvider();
 
 export default function Register({ onLogin }) {
   const [username, setUsername] = useState(null);
@@ -33,21 +32,9 @@ export default function Register({ onLogin }) {
     }
   };
 
-  const signUpWithGoogle = async () => {
-    try {
-      const user = await signInWithPopup(auth, provider)
-      router.push('/login')
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   return (
     <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
       <h2 className={styles.title}>Crie sua conta</h2>
-      <Button onClick={signUpWithGoogle}>
-        Criar com o Google
-      </Button>
       <div className={styles.formGroup}>
         <Input
           label='Nome'
@@ -77,7 +64,7 @@ export default function Register({ onLogin }) {
         Já possui uma conta?{' '}
         <Link
           className={styles.createButton}
-          href='/login'
+          href=''
           onClick={onLogin}
         >
           Entre na sua conta
