@@ -9,9 +9,16 @@ const GamesList = ({ games, user, onFavorite, favoriteGames }) => {
 
   const [search, setSearch] = useState('');
   const [isActive, setIsActive] = useState('All');
+  const [showFavorites, setShowFavorites] = useState(false);
+
 
 
   const lowerSearch = search.toLowerCase();
+
+  const handleFavorites = () => {
+    setShowFavorites(!showFavorites);
+  };
+
 
   const handleSearch = (value) => {
     setSearch(value);
@@ -32,20 +39,23 @@ const GamesList = ({ games, user, onFavorite, favoriteGames }) => {
     setIsActive(genre);
   };
 
-  const filteredGamesGenre = filteredGames.filter(
-    (game) =>
-      isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
-  );
 
-  const favoriteGamesList = favoriteGames || [];
+  const filteredGamesGenre = showFavorites
+    ? filteredGames.filter((game) => favoriteGames.includes(game.id))
+    : filteredGames.filter(
+        (game) =>
+          isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
+      );
 
   return (
     <>
       <Header
         onSearch={handleSearch}
         genres={filteredGenres}
-        handleClickFilter={handleClickFilter} 
-        user={user}/>
+        handleClickFilter={handleClickFilter}
+        user={user}
+        showFavorites={showFavorites}
+        handleFavorites={handleFavorites}/>
 
       <main>
         <div className={styles.container}>
@@ -57,7 +67,7 @@ const GamesList = ({ games, user, onFavorite, favoriteGames }) => {
                 genre={game.genre}
                 thumbnail={game.thumbnail}
                 short_description={game.short_description}
-                isFavorite={favoriteGamesList.includes(game.id)}
+                isFavorite={favoriteGames.includes(game.id)}
                 onFavorite={() => onFavorite(game.id)}
                 user={user}
               />

@@ -8,20 +8,13 @@ import Logo from '../../../public/logo.svg'
 import { useRouter } from 'next/navigation';
 import { auth } from '@/config/firebase';
 import { useState } from 'react';
+import { FaStar } from 'react-icons/fa';
 
 
-const Header = ({ onSearch, genres, handleClickFilter, user }) => {
+const Header = ({ onSearch, genres, handleClickFilter, user, showFavorites, handleFavorites }) => {
 
   const [loggedUser, setLoggedUser] = useState(user);
   const router = useRouter();
-
-  const handleFavorites = () => {
-    if (loggedUser) {
-      router.push('/favorites');
-    } else {
-      router.push('/login');
-    }
-  };
 
   const handleLogout = () => {
     auth.signOut().then(() => {
@@ -40,17 +33,19 @@ const Header = ({ onSearch, genres, handleClickFilter, user }) => {
             handleClickFilter={handleClickFilter}
             onSearch={onSearch}
           />
-            <Image src={Logo} alt='Logo do Masters Games'/>
+          <Image src={Logo} alt='Logo do Masters Games' />
           <div className={styles.desktopSearch}>
             <Search onSearch={onSearch} />
             {loggedUser ? (
-            <>
-              <button onClick={handleFavorites}>Favoritos</button>
-              <button onClick={handleLogout}>Sair</button>
-            </>
-          ) : (
-            <button onClick={handleFavorites}>Entre na sua conta</button>
-          )}
+              <>
+                <button onClick={handleFavorites}>
+                {showFavorites ? 'Todos' : 'Favoritos'}
+                </button>
+                <button onClick={handleLogout}>Sair</button>
+              </>
+            ) : (
+              <button onClick={handleFavorites}>Entre na sua conta</button>
+            )}
           </div>
         </div>
       </header>

@@ -15,9 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <AuthUserProvider>
         <body className={poppins.className}>{children}</body>
-      </AuthUserProvider>
     </html>
   );
 }
