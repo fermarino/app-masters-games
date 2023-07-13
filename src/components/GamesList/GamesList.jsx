@@ -70,6 +70,7 @@ const GamesList = ({ games, user, onFavorite, favoriteGames, onRating, userRatin
                 isFavorite={favoriteGames.includes(game.id)}
                 onFavorite={() => onFavorite(game.id)}
                 onRating={(rating) => onRating(game.id, rating)}
+                userRating={userRatings[game.id]}
                 user={user}
               />
             ))}

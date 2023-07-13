@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 
 
-const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavorite, user, userRating, onRating }) => {
+const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavorite, user, userRating, onRating, userRatings }) => {
   const [isFavoriteGame, setIsFavoriteGame] = useState(isFavorite);
-  const [rating, setRating] = useState(userRating || 0);
+  const [rating, setRating] = useState(userRatings && userRating ? userRatings[userRating] || 0 : 0);
   const [hoverRating, setHoverRating] = useState(null);
 
 
   useEffect(() => {
     setIsFavoriteGame(isFavorite);
     setRating(userRating || 0);
-  }, [isFavorite, userRating]);
+  }, [isFavorite, userRating, userRatings]);
 
   const handleFavorite = () => {
     if (!user) {
