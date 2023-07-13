@@ -23,6 +23,11 @@
   font-size: 1.8rem;
 }
 
+.starOutline:hover {
+  color: yellow;
+  font-size: 1.8rem;
+}
+
 .gameInfo {
   display: flex;
   align-items: center;

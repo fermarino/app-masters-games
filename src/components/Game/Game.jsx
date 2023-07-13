@@ -7,6 +7,7 @@ import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavorite, user, userRating, onRating }) => {
   const [isFavoriteGame, setIsFavoriteGame] = useState(isFavorite);
   const [rating, setRating] = useState(userRating || 0);
+  const [hoverRating, setHoverRating] = useState(null);
 
 
   useEffect(() => {
@@ -34,6 +35,14 @@ const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavori
     setRating(newRating);
   };
 
+  const handleMouseEnter = (hoveredRating) => {
+    setHoverRating(hoveredRating);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverRating(null);
+  };
+
   const renderStars = () => {
     const stars = [];
     const maxRating = 5;
@@ -42,8 +51,10 @@ const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavori
       stars.push(
         <FaStar
           key={i}
-          className={rating >= i ? styles.starFilled : styles.starOutline}
+          className={i <= hoverRating || i <= rating ? styles.starFilled : styles.starOutline}
           onClick={() => handleRate(i)}
+          onMouseEnter={() => handleMouseEnter(i)}
+          onMouseLeave={handleMouseLeave}
         />
       );
     }
