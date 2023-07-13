@@ -8,10 +8,19 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
-  
+  padding: 1.8rem;
   width: 90%;
   height: 470px;
+}
+
+.starFilled {
+  color: yellow;
+  font-size: 1.8rem;
+}
+
+.starOutline {
+  color: grey;
+  font-size: 1.8rem;
 }
 
 .gameInfo {

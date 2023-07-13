@@ -14,17 +14,16 @@ import {
   setDoc,
   updateDoc
 } from 'firebase/firestore';
-import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
   const [user, setUser] = useState(null);
   const [favoriteGames, setFavoriteGames] = useState([]);
+  const [userRatings, setUserRatings] = useState({});
   
   const { games, isLoading, error } = GamesData();
   const hasGames = games.length > 0;
 
-  const router = useRouter();
 
   const fetchFavoriteGames = async (userId) => {
     const userRef = doc(db, 'users', userId);
@@ -38,14 +37,28 @@ const Home = () => {
     }
   };
 
+  const fetchUserRatings = async (userId) => {
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const ratings = userDoc.data().ratings || {};
+      setUserRatings(ratings);
+    } else {
+      setUserRatings({});
+    }
+  };
+
   useEffect(() => {
-    onAuthStateChanged(auth, currentUser => {
+    onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
         fetchFavoriteGames(currentUser.uid);
+        fetchUserRatings(currentUser.uid);
       } else {
         setUser(null);
-        setFavoriteGames([]); 
+        setFavoriteGames([]);
+        setUserRatings({});
       }
     });
   }, []);
@@ -85,6 +98,41 @@ const Home = () => {
     }
   };
 
+  const handleRating = async (gameId, rating) => {
+    if (!user) {
+      alert('Faça login para avaliar um jogo!');
+      return;
+    }
+
+    const userRef = doc(db, 'users', user.uid);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const ratings = userDoc.data().ratings || {};
+      ratings[gameId] = rating;
+
+      await updateDoc(userRef, {
+        ratings: ratings,
+      });
+
+      setUserRatings(ratings);
+    } else {
+      const ratings = {};
+      ratings[gameId] = rating;
+
+      await setDoc(userRef, {
+        email: user.email,
+        name: user.displayName,
+        favorites: [],
+        ratings: ratings,
+      });
+
+      setUserRatings(ratings);
+    }
+  };
+
+
+
   if (isLoading) {
     return <div className={styles.loader} />;
   }
@@ -93,7 +141,7 @@ const Home = () => {
     return <span className={styles.customError}>{error}</span>;
   }
 
-  return <GamesList games={games} user={user} onFavorite={handleFavorite} favoriteGames={favoriteGames} />;
+  return <GamesList games={games} user={user} onFavorite={handleFavorite} favoriteGames={favoriteGames} userRatings={userRatings} onRating={handleRating} />;
 };
 
 export default Home;

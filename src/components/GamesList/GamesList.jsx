@@ -5,7 +5,7 @@ import Game from '../Game/Game'
 import Header from '../Header/Header'
 import BackToTop from '../BackToTop/BackToTop'
 
-const GamesList = ({ games, user, onFavorite, favoriteGames }) => {
+const GamesList = ({ games, user, onFavorite, favoriteGames, onRating, userRatings }) => {
 
   const [search, setSearch] = useState('');
   const [isActive, setIsActive] = useState('All');
@@ -69,6 +69,7 @@ const GamesList = ({ games, user, onFavorite, favoriteGames }) => {
                 short_description={game.short_description}
                 isFavorite={favoriteGames.includes(game.id)}
                 onFavorite={() => onFavorite(game.id)}
+                onRating={(rating) => onRating(game.id, rating)}
                 user={user}
               />
             ))}
