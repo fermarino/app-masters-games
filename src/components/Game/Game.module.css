@@ -16,15 +16,11 @@
 .starFilled {
   color: yellow;
   font-size: 1.8rem;
+  cursor: pointer;
 }
 
 .starOutline {
   color: grey;
-  font-size: 1.8rem;
-}
-
-.starOutline:hover {
-  color: yellow;
   font-size: 1.8rem;
 }
 

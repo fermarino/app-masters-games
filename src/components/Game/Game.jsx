@@ -3,36 +3,24 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react';
 import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 
+import { useFavorites } from '@/hooks/useFavorites';
+import { useRatings } from '@/hooks/useRatings';
 
-const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavorite, user, userRating, onRating, userRatings }) => {
-  const [isFavoriteGame, setIsFavoriteGame] = useState(isFavorite);
-  const [rating, setRating] = useState(userRatings && userRating ? userRatings[userRating] || 0 : 0);
+
+
+const Game = ({ game, user, favoriteGames, userRatings, onRating, addFavorite, onFavorite }) => {
   const [hoverRating, setHoverRating] = useState(null);
 
+  const isFavorite = favoriteGames && favoriteGames.includes(game.id);
+  const userRating = userRatings && userRatings[game.id];
 
-  useEffect(() => {
-    setIsFavoriteGame(isFavorite);
-    setRating(userRating || 0);
-  }, [isFavorite, userRating, userRatings]);
 
   const handleFavorite = () => {
-    if (!user) {
-      alert('Faça login para favoritar um jogo!');
-      return;
-    }
-
-    onFavorite();
-    setIsFavoriteGame((prevIsFavorite) => !prevIsFavorite);
+    onFavorite(game.id);
   };
 
-  const handleRate = (newRating) => {
-    if (!user) {
-      alert('Faça login para avaliar um jogo!');
-      return;
-    }
-
-    onRating(newRating);
-    setRating(newRating);
+  const handleRate = (rating) => {
+    onRating(game.id, rating);
   };
 
   const handleMouseEnter = (hoveredRating) => {
@@ -51,7 +39,7 @@ const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavori
       stars.push(
         <FaStar
           key={i}
-          className={i <= hoverRating || i <= rating ? styles.starFilled : styles.starOutline}
+          className={i <= (userRating || 0) ? styles.starFilled : styles.starOutline}
           onClick={() => handleRate(i)}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
@@ -65,11 +53,11 @@ const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavori
   return (
     <div className={styles.cardGame} >
       <div className={styles.gameInfo}>
-        <h2 className={styles.gameTitle}>{title}</h2>
-        <h3 className={styles.gameGenre}>{genre}</h3>
+        <h2 className={styles.gameTitle}>{game.title}</h2>
+        <h3 className={styles.gameGenre}>{game.genre}</h3>
       </div>
       <button onClick={handleFavorite} className={styles.favoriteButton}>
-        {isFavoriteGame ? (
+        {isFavorite ? (
           <FaHeart className={`${styles.favoriteIcon} ${styles.favoriteFilled}`} />
         ) : (
           <FaRegHeart className={styles.favoriteOutline} />
@@ -80,11 +68,11 @@ const Game = ({ title, genre, thumbnail, short_description, isFavorite, onFavori
         {renderStars()}
       </div>
 
-      <Image src={thumbnail} alt={title} className={styles.gameImg}
+      <Image src={game.thumbnail} alt={game.title} className={styles.gameImg}
         width={0}
         height={0}
         sizes="100vw" />
-      <p className={styles.gameDesc}>{short_description}</p>
+      <p className={styles.gameDesc}>{game.short_description}</p>
 
     </div>
   )

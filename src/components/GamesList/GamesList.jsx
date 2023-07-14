@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import styles from './GamesList.module.css'
 
+import { useFavorites } from '@/hooks/useFavorites';
+
 import Game from '../Game/Game'
 import Header from '../Header/Header'
 import BackToTop from '../BackToTop/BackToTop'
 
-const GamesList = ({ games, user, onFavorite, favoriteGames, onRating, userRatings }) => {
+const GamesList = ({ games, user, onRating, userRatings }) => {
 
   const [search, setSearch] = useState('');
   const [isActive, setIsActive] = useState('All');
   const [showFavorites, setShowFavorites] = useState(false);
+
+  const { favoriteGames, addFavorite } = useFavorites();
 
 
 
@@ -62,14 +66,16 @@ const GamesList = ({ games, user, onFavorite, favoriteGames, onRating, userRatin
           <div className={styles.gamesList}>
             {filteredGamesGenre.map((game) => (
               <Game
+                game={game}
+                id={game.id}
                 key={game.id}
                 title={game.title}
                 genre={game.genre}
                 thumbnail={game.thumbnail}
                 short_description={game.short_description}
                 isFavorite={favoriteGames.includes(game.id)}
-                onFavorite={() => onFavorite(game.id)}
-                onRating={(rating) => onRating(game.id, rating)}
+                onFavorite={addFavorite}
+                onRating={onRating}
                 userRating={userRatings[game.id]}
                 user={user}
               />

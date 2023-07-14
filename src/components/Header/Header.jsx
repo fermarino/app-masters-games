@@ -8,7 +8,7 @@ import Logo from '../../../public/logo.svg'
 import { useRouter } from 'next/navigation';
 import { auth } from '@/config/firebase';
 import { useState } from 'react';
-import { FaStar } from 'react-icons/fa';
+import Link from 'next/link';
 
 
 const Header = ({ onSearch, genres, handleClickFilter, user, showFavorites, handleFavorites }) => {
@@ -39,12 +39,14 @@ const Header = ({ onSearch, genres, handleClickFilter, user, showFavorites, hand
             {loggedUser ? (
               <>
                 <button onClick={handleFavorites}>
-                {showFavorites ? 'Todos' : 'Favoritos'}
+                  {showFavorites ? 'Todos' : 'Favoritos'}
                 </button>
                 <button onClick={handleLogout}>Sair</button>
               </>
             ) : (
-              <button onClick={handleFavorites}>Entre na sua conta</button>
+              <Link href='/auth'>
+                <button onClick={handleFavorites}>Entre na sua conta</button>
+              </Link>
             )}
           </div>
         </div>
