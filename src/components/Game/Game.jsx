@@ -5,25 +5,42 @@ import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 
 import { useFavorites } from '@/hooks/useFavorites';
 import { useRatings } from '@/hooks/useRatings';
+import Modal from '@/components/Modal/Modal';
+import { useRouter } from 'next/navigation';
 
 
 
-const Game = ({ game }) => {
+const Game = ({ game, user }) => {
   const [hoverRating, setHoverRating] = useState(null);
 
   const { favoriteGames, addFavorite } = useFavorites();
   const { userRatings, addRating } = useRatings();
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalButtonText, setModalButtonText] = useState('');
 
   const isFavorite = favoriteGames && favoriteGames.includes(game.id);
   const userRating = userRatings && userRatings[game.id];
 
 
   const handleFavorite = () => {
-    addFavorite(game.id);
+    if(user) {
+      addFavorite(game.id);
+    } else {
+      setModalMessage('Você deve entrar em sua conta para favoritar um jogo');
+      setModalButtonText('Entrar');
+      setShowModal(true);
+    }
   };
 
   const handleRating = (rating) => {
+    if (user) {
     addRating(game.id, rating);
+    } else {
+      setModalMessage('Você deve entrar em sua conta para avaliar o jogo');
+      setModalButtonText('Entrar');
+      setShowModal(true);
+    }
   };
 
   const handleMouseEnter = (hoveredRating) => {
@@ -32,6 +49,14 @@ const Game = ({ game }) => {
 
   const handleMouseLeave = () => {
     setHoverRating(null);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const redirectToAuth = () => {
+    router.push('/auth')
   };
 
   const renderStars = () => {
@@ -76,7 +101,14 @@ const Game = ({ game }) => {
         height={0}
         sizes="100vw" />
       <p className={styles.gameDesc}>{game.short_description}</p>
-
+      {showModal && (
+        <Modal
+          message={modalMessage}
+          buttonText={modalButtonText}
+          onClose={closeModal}
+          onButtonClick={redirectToAuth}
+        />
+      )}
     </div>
   )
 }
