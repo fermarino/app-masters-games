@@ -8,12 +8,13 @@
 }
 
 .input {
-  background-color: #2B2B2B;
-  border: 1px solid var(--light-grey-border);
+  background-color: #3c3c3c;
+  border: 1px solid #40404053;
   border-radius: 5px;
   color: #fff;
   font-size: 1.6rem;
   padding: 16px;
+  padding-right: 3.5rem;
   width: 100%;
 }
 

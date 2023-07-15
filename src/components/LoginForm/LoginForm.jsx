@@ -2,63 +2,74 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import { auth } from '../../config/firebase';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'
 
 import styles from './LoginForm.module.css';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 import Link from 'next/link';
 
-const provider = new GoogleAuthProvider();
-
-const LoginForm = ({ onRegister }) => {
+const LoginForm = ({ onRegister, onForgotPassword }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [loginError, setLoginError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginMessage, setLoginMessage] = useState('');
 
   const router = useRouter()
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleLogin = async () => {
-    if (!email || !password) return;
+    if (!email || !password) {
+      setLoginMessage('Por favor, preencha todos os campos.');
+      return;
+    };
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push('/')
-      
+
     } catch (error) {
-      setLoginError('Falha ao entrar na conta. Verifique seu email e senha.');
+      setLoginMessage('Falha ao entrar na conta. Verifique seu email e senha.');
     }
   }
 
-  const signInWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, provider);
-      router.push('/')
-    } catch (error) {
-      setLoginError('Falha ao fazer login com o Google.');
-    }
-  }
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+    onForgotPassword();
+  };
+
   return (
     <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
       <h2 className={styles.title}>Entre na sua conta</h2>
-      <Button onClick={signInWithGoogle}>
-        Entrar com o Google
-      </Button>
       <div className={styles.formGroup}>
         <Input
           label='Email'
-          type='email'
+          type='text'
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Input
-          label='Senha'
-          type='password'
-          onChange={(e) => setPassword(e.target.value)}
-          required='required'
-        />
+        <div className={styles.passwordField}>
+          <Input
+            className={styles.passwordInput}
+            label='Senha'
+            type={showPassword ? 'text' : 'password'}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className={styles.passwordButton} onClick={togglePasswordVisibility}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
       </div>
-      {loginError && <p>{loginError}</p>}
+      {loginMessage && <p className={styles.loginError}>{loginMessage}</p>}
+      <div className={styles.forgotLink}>
+        <Link href="#" onClick={handleForgotPassword}>
+          Esqueceu sua senha?
+        </Link>
+      </div>
       <Button type="submit" onClick={handleLogin} >
         Entrar
       </Button>

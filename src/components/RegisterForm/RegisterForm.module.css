@@ -33,9 +33,37 @@
 
 .createButton {
   font-size: 1.1rem;
-  color: var(--secondary-color);
+  color: #fff;
 }
 
 .createButton:hover {
   text-decoration: underline;
+}
+
+.error {
+  color: red;
+  font-size: 1.1rem;
+}
+
+.passwordButton {
+  position: absolute;
+  right: 12px;
+  top: 87%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: var(--font-color);
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.passwordButton:hover {
+  color: var(--secondary-color)
+}
+
+.passwordField {
+  position: relative;
 }
