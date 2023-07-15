@@ -14,6 +14,7 @@ import Link from 'next/link';
 const Header = ({ onSearch, genres, handleClickFilter, user, showFavorites, handleFavorites }) => {
 
   const [loggedUser, setLoggedUser] = useState(user);
+  const [dropMenu, setDropMenu] = useState(false);
   const router = useRouter();
 
   const handleLogout = () => {
@@ -21,6 +22,10 @@ const Header = ({ onSearch, genres, handleClickFilter, user, showFavorites, hand
       setLoggedUser(null);
       router.push('/');
     });
+  };
+
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (

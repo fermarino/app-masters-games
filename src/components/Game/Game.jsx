@@ -1,30 +1,28 @@
-import styles from './Game.module.css'
-import Image from 'next/image'
+import styles from './Game.module.css';
+import Image from 'next/image';
 import { useState } from 'react';
 import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 
 import { useFavorites } from '@/hooks/useFavorites';
 import { useRatings } from '@/hooks/useRatings';
 import Modal from '@/components/Modal/Modal';
-import { useRouter } from 'next/navigation';
-
-
+import { useRouter } from 'next/router';
 
 const Game = ({ game, user }) => {
   const [hoverRating, setHoverRating] = useState(null);
 
   const { favoriteGames, addFavorite } = useFavorites();
-  const { userRatings, addRating } = useRatings();
+  const { userRatings, gameRatings, addRating } = useRatings();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalButtonText, setModalButtonText] = useState('');
 
   const isFavorite = favoriteGames && favoriteGames.includes(game.id);
   const userRating = userRatings && userRatings[game.id];
-
+  const gameRating = gameRatings && gameRatings[game.id];
 
   const handleFavorite = () => {
-    if(user) {
+    if (user) {
       addFavorite(game.id);
     } else {
       setModalMessage('Você deve entrar em sua conta para favoritar um jogo');
@@ -35,7 +33,7 @@ const Game = ({ game, user }) => {
 
   const handleRating = (rating) => {
     if (user) {
-    addRating(game.id, rating);
+      addRating(game.id, rating);
     } else {
       setModalMessage('Você deve entrar em sua conta para avaliar o jogo');
       setModalButtonText('Entrar');
@@ -79,7 +77,7 @@ const Game = ({ game, user }) => {
   };
 
   return (
-    <div className={styles.cardGame} >
+    <div className={styles.cardGame}>
       <div className={styles.gameInfo}>
         <h2 className={styles.gameTitle}>{game.title}</h2>
         <h3 className={styles.gameGenre}>{game.genre}</h3>
@@ -93,13 +91,26 @@ const Game = ({ game, user }) => {
       </button>
 
       <div className={styles.ratingContainer}>
-        {renderStars()}
+      {renderStars()}
+        {gameRating ? (
+          <span className={styles.ratingInfo}>
+            {gameRating.average.toFixed(1)} ({gameRating.count})
+          </span>
+        ) : (
+          <span className={styles.ratingInfo}>
+            0.0 (0)
+          </span>
+        )}
       </div>
 
-      <Image src={game.thumbnail} alt={game.title} className={styles.gameImg}
+      <Image
+        src={game.thumbnail}
+        alt={game.title}
+        className={styles.gameImg}
         width={0}
         height={0}
-        sizes="100vw" />
+        sizes="100vw"
+      />
       <p className={styles.gameDesc}>{game.short_description}</p>
       {showModal && (
         <Modal
@@ -110,7 +121,7 @@ const Game = ({ game, user }) => {
         />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Game
+export default Game;

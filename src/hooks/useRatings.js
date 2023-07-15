@@ -1,18 +1,11 @@
-import { useState, useEffect } from 'react';
-import {
-  arrayRemove,
-  arrayUnion,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc
-} from 'firebase/firestore';
+import { useState, useEffect, useCallback } from 'react';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '@/config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
 export const useRatings = () => {
   const [userRatings, setUserRatings] = useState({});
-  const [user, setUser] = useState(null);
+  const [gameRatings, setGameRatings] = useState({});
 
   const fetchUserRatings = async (userId) => {
     const userRef = doc(db, 'users', userId);
@@ -26,45 +19,40 @@ export const useRatings = () => {
     }
   };
 
-  const updateGameRatings = async (gameId, ratings) => {
-    const gameRef = doc(db, 'games', gameId);
-    const gameDoc = await getDoc(gameRef);
-  
-    if (gameDoc.exists()) {
-      const gameData = gameDoc.data();
-      const previousCount = gameData.num_ratings || 0;
-      const previousRatings = gameData.ratings || [];
-  
-      const newCount = Object.keys(ratings).length;
-      const newRatings = Object.entries(ratings);
-  
-      // Merge the existing and new ratings
-      const updatedRatings = [
-        ...previousRatings,
-        ...newRatings.map(([userId, rating]) => ({ userId, rating })),
-      ];
-  
-      // Calculate the total ratings and average rating
-      const newTotal = updatedRatings.reduce((sum, { rating }) => sum + rating, 0);
-      const newAverage = newTotal / newCount;
-  
-      // Update the game document
-      await updateDoc(gameRef, {
-        num_ratings: newCount,
-        ratings: updatedRatings,
-        total_ratings: newTotal,
-        average_rating: newAverage,
-      });
-    }
-  };
+  const calculateGameRatings = useCallback(() => {
+    const ratingsCount = {};
+    const ratingsSum = {};
+
+    Object.entries(userRatings).forEach(([gameId, rating]) => {
+      if (ratingsCount[gameId]) {
+        ratingsCount[gameId] += 1;
+        ratingsSum[gameId] += rating;
+      } else {
+        ratingsCount[gameId] = 1;
+        ratingsSum[gameId] = rating;
+      }
+    });
+
+    const gameRatings = {};
+
+    Object.entries(ratingsCount).forEach(([gameId, count]) => {
+      const average = ratingsSum[gameId] / count;
+      gameRatings[gameId] = {
+        count,
+        average,
+      };
+    });
+
+    setGameRatings(gameRatings);
+  }, [userRatings]);
 
   const addRating = async (gameId, rating) => {
-    if (!user) {
+    if (!auth.currentUser) {
       alert('Faça login para avaliar um jogo!');
       return;
     }
 
-    const userRef = doc(db, 'users', user.uid);
+    const userRef = doc(db, 'users', auth.currentUser.uid);
     const userDoc = await getDoc(userRef);
 
     if (userDoc.exists()) {
@@ -76,14 +64,13 @@ export const useRatings = () => {
       });
 
       setUserRatings(ratings);
-      await updateGameRatings(gameId, ratings);
     } else {
       const ratings = {};
       ratings[gameId] = rating;
 
-      await setDoc(userRef, {
-        email: user.email,
-        name: user.displayName,
+      await db.collection('users').doc(auth.currentUser.uid).set({
+        email: auth.currentUser.email,
+        name: auth.currentUser.displayName,
         favorites: [],
         ratings: ratings,
       });
@@ -93,12 +80,12 @@ export const useRatings = () => {
   };
 
   const removeRating = async (gameId) => {
-    if (!user) {
+    if (!auth.currentUser) {
       alert('Faça login para remover sua avaliação!');
       return;
     }
 
-    const userRef = doc(db, 'users', user.uid);
+    const userRef = doc(db, 'users', auth.currentUser.uid);
     const userDoc = await getDoc(userRef);
 
     if (userDoc.exists()) {
@@ -112,21 +99,24 @@ export const useRatings = () => {
         });
 
         setUserRatings(ratings);
-        await updateGameRatings(gameId, ratings);
       }
     }
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
       if (currentUser) {
         fetchUserRatings(currentUser.uid);
       } else {
         setUserRatings({});
+        setGameRatings({});
       }
     });
   }, []);
 
-  return { userRatings, addRating, removeRating };
+  useEffect(() => {
+    calculateGameRatings();
+  }, [userRatings, calculateGameRatings]);
+
+  return { userRatings, gameRatings, addRating, removeRating };
 };
