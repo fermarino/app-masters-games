@@ -72,4 +72,3 @@ export const useFavorites = () => {
 
   return { favoriteGames, addFavorite };
 };
-

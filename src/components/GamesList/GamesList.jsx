@@ -1,21 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './GamesList.module.css'
 
 import { useFavorites } from '@/hooks/useFavorites';
+import { useRatings } from '@/hooks/useRatings';
 
 import Game from '../Game/Game'
 import Header from '../Header/Header'
 import BackToTop from '../BackToTop/BackToTop'
 
-const GamesList = ({ games, user, onRating, userRatings }) => {
+const GamesList = ({ games, user, onRating, userRatings, favoriteGames }) => {
 
   const [search, setSearch] = useState('');
   const [isActive, setIsActive] = useState('All');
   const [showFavorites, setShowFavorites] = useState(false);
 
-  const { favoriteGames, addFavorite } = useFavorites();
-
-
+  const { addFavorite } = useFavorites();
+  const { addRating } = useRatings();
 
   const lowerSearch = search.toLowerCase();
 
@@ -69,11 +69,7 @@ const GamesList = ({ games, user, onRating, userRatings }) => {
                 game={game}
                 id={game.id}
                 key={game.id}
-                title={game.title}
-                genre={game.genre}
-                thumbnail={game.thumbnail}
-                short_description={game.short_description}
-                isFavorite={favoriteGames.includes(game.id)}
+                isFavorite={favoriteGames?.includes(game.id)}
                 onFavorite={addFavorite}
                 onRating={onRating}
                 userRating={userRatings[game.id]}

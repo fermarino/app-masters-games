@@ -10,7 +10,7 @@ import { useFavorites } from '@/hooks/useFavorites';
 import { useRatings } from '@/hooks/useRatings';
 
 const Home = () => {
-  const { favoriteGames } = useFavorites();
+  const { favoriteGames, addFavorite } = useFavorites();
   const { userRatings, addRating } = useRatings();
 
   const { user, isLoading: isAuthLoading } = useAuth();
@@ -35,6 +35,7 @@ const Home = () => {
       favoriteGames={favoriteGames}
       userRatings={userRatings}
       onRating={handleRating}
+      onFavorite={addFavorite}
       user={user}
     />
   );

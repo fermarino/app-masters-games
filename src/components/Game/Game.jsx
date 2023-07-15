@@ -1,6 +1,6 @@
 import styles from './Game.module.css'
 import Image from 'next/image'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 
 import { useFavorites } from '@/hooks/useFavorites';
@@ -8,19 +8,22 @@ import { useRatings } from '@/hooks/useRatings';
 
 
 
-const Game = ({ game, user, favoriteGames, userRatings, onRating, addFavorite, onFavorite }) => {
+const Game = ({ game }) => {
   const [hoverRating, setHoverRating] = useState(null);
+
+  const { favoriteGames, addFavorite } = useFavorites();
+  const { userRatings, addRating } = useRatings();
 
   const isFavorite = favoriteGames && favoriteGames.includes(game.id);
   const userRating = userRatings && userRatings[game.id];
 
 
   const handleFavorite = () => {
-    onFavorite(game.id);
+    addFavorite(game.id);
   };
 
-  const handleRate = (rating) => {
-    onRating(game.id, rating);
+  const handleRating = (rating) => {
+    addRating(game.id, rating);
   };
 
   const handleMouseEnter = (hoveredRating) => {
@@ -33,14 +36,14 @@ const Game = ({ game, user, favoriteGames, userRatings, onRating, addFavorite, o
 
   const renderStars = () => {
     const stars = [];
-    const maxRating = 5;
+    const maxRating = 4;
 
     for (let i = 1; i <= maxRating; i++) {
       stars.push(
         <FaStar
           key={i}
-          className={i <= (userRating || 0) ? styles.starFilled : styles.starOutline}
-          onClick={() => handleRate(i)}
+          className={i <= hoverRating ||i <= userRating ? styles.starFilled : styles.starOutline}
+          onClick={() => handleRating(i)}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
         />

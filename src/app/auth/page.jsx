@@ -6,20 +6,31 @@ import LoginForm from '@/components/LoginForm/LoginForm'
 import RegisterForm from '@/components/RegisterForm/RegisterForm'
 
 import styles from './page.module.css';
+import ResetPasswordForm from '@/components/ResetPasswordForm/ResetPasswordForm';
 
 const AuthPage = () => {
-  const [isRegistering, setisRegistering] = useState(false)
+  const [isRegistering, setIsRegistering] = useState(false)
+  const [isResetingPassword, setIsResetingPassword] = useState(false);
 
   const handleToggleForm = () => {
-    setisRegistering(!isRegistering)
+    setIsRegistering(!isRegistering)
+    setIsResetingPassword(false);
+
   }
-  
+
+  const handleToggleResetForm = () => {
+    setIsResetingPassword(!isResetingPassword);
+    setIsRegistering(false);
+  };
+
   return (
     <div className={styles.container}>
-      {isRegistering ? (
+      {isResetingPassword ? (
+        <ResetPasswordForm onLogin={handleToggleForm} />
+      ) : isRegistering ? (
         <RegisterForm onLogin={handleToggleForm} />
       ) : (
-        <LoginForm onRegister={handleToggleForm} />
+        <LoginForm onRegister={handleToggleForm} onForgotPassword={handleToggleResetForm} />
       )}
     </div>
   )
