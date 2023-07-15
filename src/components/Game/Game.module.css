@@ -29,12 +29,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
+  width: 100%;
   margin: 0 5px;
   padding: 1.2rem 0;
 }
 
 .gameTitle {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
 }
 
@@ -42,6 +43,20 @@
   color: var(--font-color);
   font-size: 1rem;
   font-weight: 600;
+}
+
+
+.gameImg {
+  width: 100%;
+  height: 100%;
+}
+
+.userFeatures {
+  display: flex;
+  padding-top: 1rem;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .favoriteButton {
@@ -68,16 +83,19 @@
   color: #fff;
 }
 
-
-.gameImg {
-  width: 100%;
-  height: 100%;
+.ratingInfo {
+  color: var(--font-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 3rem;
+  margin-left: 0.8rem;
 }
 
 .gameDesc {
+  text-align: left;
   font-size: 1.3rem;
-  padding: 1rem;
   word-break: break-all;
+  width: 100%;
 }
 
 

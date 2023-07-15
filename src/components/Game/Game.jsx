@@ -65,7 +65,7 @@ const Game = ({ game, user }) => {
       stars.push(
         <FaStar
           key={i}
-          className={i <= hoverRating ||i <= userRating ? styles.starFilled : styles.starOutline}
+          className={i <= hoverRating || i <= userRating ? styles.starFilled : styles.starOutline}
           onClick={() => handleRating(i)}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={handleMouseLeave}
@@ -82,27 +82,6 @@ const Game = ({ game, user }) => {
         <h2 className={styles.gameTitle}>{game.title}</h2>
         <h3 className={styles.gameGenre}>{game.genre}</h3>
       </div>
-      <button onClick={handleFavorite} className={styles.favoriteButton}>
-        {isFavorite ? (
-          <FaHeart className={`${styles.favoriteIcon} ${styles.favoriteFilled}`} />
-        ) : (
-          <FaRegHeart className={styles.favoriteOutline} />
-        )}
-      </button>
-
-      <div className={styles.ratingContainer}>
-      {renderStars()}
-        {gameRating ? (
-          <span className={styles.ratingInfo}>
-            {gameRating.average.toFixed(1)} ({gameRating.count})
-          </span>
-        ) : (
-          <span className={styles.ratingInfo}>
-            0.0 (0)
-          </span>
-        )}
-      </div>
-
       <Image
         src={game.thumbnail}
         alt={game.title}
@@ -111,6 +90,27 @@ const Game = ({ game, user }) => {
         height={0}
         sizes="100vw"
       />
+      <div className={styles.userFeatures}>
+        <div className={styles.ratingContainer}>
+          {renderStars()}
+          {gameRating ? (
+            <span className={styles.ratingInfo}>
+              {gameRating.average.toFixed(1)} ({gameRating.count})
+            </span>
+          ) : (
+            <span className={styles.ratingInfo}>
+              0.0 (0)
+            </span>
+          )}
+        </div>
+        <button onClick={handleFavorite} className={styles.favoriteButton}>
+          {isFavorite ? (
+            <FaHeart className={`${styles.favoriteIcon} ${styles.favoriteFilled}`} />
+          ) : (
+            <FaRegHeart className={styles.favoriteOutline} />
+          )}
+        </button>
+      </div>
       <p className={styles.gameDesc}>{game.short_description}</p>
       {showModal && (
         <Modal
