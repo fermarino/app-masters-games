@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc
+} from 'firebase/firestore';
+import { auth, db } from '@/config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { db, auth } from '@/config/firebase';
 
 export const useRatings = () => {
   const [userRatings, setUserRatings] = useState({});
@@ -16,6 +23,38 @@ export const useRatings = () => {
       setUserRatings(ratings);
     } else {
       setUserRatings({});
+    }
+  };
+
+  const updateGameRatings = async (gameId, ratings) => {
+    const gameRef = doc(db, 'games', gameId);
+    const gameDoc = await getDoc(gameRef);
+  
+    if (gameDoc.exists()) {
+      const gameData = gameDoc.data();
+      const previousCount = gameData.num_ratings || 0;
+      const previousRatings = gameData.ratings || [];
+  
+      const newCount = Object.keys(ratings).length;
+      const newRatings = Object.entries(ratings);
+  
+      // Merge the existing and new ratings
+      const updatedRatings = [
+        ...previousRatings,
+        ...newRatings.map(([userId, rating]) => ({ userId, rating })),
+      ];
+  
+      // Calculate the total ratings and average rating
+      const newTotal = updatedRatings.reduce((sum, { rating }) => sum + rating, 0);
+      const newAverage = newTotal / newCount;
+  
+      // Update the game document
+      await updateDoc(gameRef, {
+        num_ratings: newCount,
+        ratings: updatedRatings,
+        total_ratings: newTotal,
+        average_rating: newAverage,
+      });
     }
   };
 
@@ -37,6 +76,7 @@ export const useRatings = () => {
       });
 
       setUserRatings(ratings);
+      await updateGameRatings(gameId, ratings);
     } else {
       const ratings = {};
       ratings[gameId] = rating;
@@ -52,6 +92,31 @@ export const useRatings = () => {
     }
   };
 
+  const removeRating = async (gameId) => {
+    if (!user) {
+      alert('Faça login para remover sua avaliação!');
+      return;
+    }
+
+    const userRef = doc(db, 'users', user.uid);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const ratings = userDoc.data().ratings || {};
+
+      if (ratings[gameId]) {
+        delete ratings[gameId];
+
+        await updateDoc(userRef, {
+          ratings: ratings,
+        });
+
+        setUserRatings(ratings);
+        await updateGameRatings(gameId, ratings);
+      }
+    }
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -63,6 +128,5 @@ export const useRatings = () => {
     });
   }, []);
 
-  return { userRatings, addRating };
+  return { userRatings, addRating, removeRating };
 };
-
