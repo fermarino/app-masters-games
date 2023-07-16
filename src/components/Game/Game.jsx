@@ -6,7 +6,7 @@ import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useRatings } from '@/hooks/useRatings';
 import Modal from '@/components/Modal/Modal';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const Game = ({ game, user }) => {
   const [hoverRating, setHoverRating] = useState(null);
@@ -20,6 +20,8 @@ const Game = ({ game, user }) => {
   const isFavorite = favoriteGames && favoriteGames.includes(game.id);
   const userRating = userRatings && userRatings[game.id];
   const gameRating = gameRatings && gameRatings[game.id];
+
+  const router = useRouter()
 
   const handleFavorite = () => {
     if (user) {

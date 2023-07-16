@@ -18,9 +18,15 @@
   margin-right: 2rem;
 }
 
+.userAccount {
+  width: 100%;
+  position: absolute;
+  right: 1000;
+  background-color: red;
+}
+
 @media screen and (min-width: 1024px) {
   .desktopSearch {
     display: block;
   }
 }
-

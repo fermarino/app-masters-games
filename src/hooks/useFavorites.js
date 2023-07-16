@@ -1,12 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  arrayRemove,
-  arrayUnion,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc
-} from 'firebase/firestore';
+import { arrayRemove, arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '@/config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -14,7 +7,7 @@ export const useFavorites = () => {
   const [favoriteGames, setFavoriteGames] = useState([]);
   const [user, setUser] = useState(null);
 
-  const fetchFavoriteGames = async userId => {
+  const fetchFavoriteGames = async (userId) => {
     const userRef = doc(db, 'users', userId);
     const userDoc = await getDoc(userRef);
 
@@ -26,7 +19,7 @@ export const useFavorites = () => {
     }
   };
 
-  const addFavorite = async gameId => {
+  const addFavorite = async (gameId) => {
     if (!user) {
       alert('Faça login para favoritar um jogo!');
       return;
@@ -41,12 +34,12 @@ export const useFavorites = () => {
 
       if (gameIndex !== -1) {
         await updateDoc(userRef, {
-          favorites: arrayRemove(gameId)
+          favorites: arrayRemove(gameId),
         });
-        setFavoriteGames(favorites.filter(id => id !== gameId));
+        setFavoriteGames(favorites.filter((id) => id !== gameId));
       } else {
         await updateDoc(userRef, {
-          favorites: arrayUnion(gameId)
+          favorites: arrayUnion(gameId),
         });
         setFavoriteGames([...favorites, gameId]);
       }
@@ -54,13 +47,14 @@ export const useFavorites = () => {
       await setDoc(userRef, {
         email: user.email,
         name: user.displayName,
-        favorites: [gameId]
+        favorites: [gameId],
       });
       setFavoriteGames([gameId]);
     }
   };
+
   useEffect(() => {
-    onAuthStateChanged(auth, currentUser => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
         fetchFavoriteGames(currentUser.uid);
@@ -68,7 +62,15 @@ export const useFavorites = () => {
         setFavoriteGames([]);
       }
     });
+
+    return () => unsubscribe(); // Cancela o listener ao desmontar o componente
   }, []);
 
-  return { favoriteGames, addFavorite };
+  useEffect(() => {
+    if (user) {
+      fetchFavoriteGames(user.uid);
+    }
+  }, [user]);
+
+  return { favoriteGames, addFavorite, user };
 };

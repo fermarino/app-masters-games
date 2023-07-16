@@ -29,7 +29,7 @@ const GamesList = ({ games, user, onRating, userRatings, favoriteGames }) => {
   }
 
 
-  const filteredGames = games.filter((game) => game.title.toLowerCase().includes(lowerSearch))
+  const filteredGames = games.filter((game) => game?.title?.toLowerCase().includes(lowerSearch))
 
   const filteredGenres = games.reduce((genres, game) => {
     if (!genres.includes(game.genre)) {
@@ -45,11 +45,13 @@ const GamesList = ({ games, user, onRating, userRatings, favoriteGames }) => {
 
 
   const filteredGamesGenre = showFavorites
-    ? filteredGames.filter((game) => favoriteGames.includes(game.id))
-    : filteredGames.filter(
-        (game) =>
-          isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
-      );
+  ? games.filter((game) => favoriteGames.includes(game.id))
+  : games.filter(
+      (game) =>
+        isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase()
+    );
+
+
 
   return (
     <>
