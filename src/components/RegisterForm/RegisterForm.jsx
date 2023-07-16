@@ -45,7 +45,7 @@ export default function Register({ onLogin }) {
       await updateProfile(auth.currentUser, {
         displayName: username
       })
-      router.push('/login')
+      router.push('/')
     } catch (error) {
       console.error(error)
     }

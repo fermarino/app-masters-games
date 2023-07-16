@@ -24,7 +24,6 @@ const FavoritesPage = ({ games }) => {
 
   return (
     <div>
-      <h1>Meus Favoritos</h1>
       <GamesList games={filteredGames} user={user} onRating={handleRating} userRatings={userRatings} favoriteGames={favoriteGames} />
     </div>
   );
