@@ -31,7 +31,9 @@ const Header = ({ onSearch, genres, handleClickFilter, user }) => {
     <header>
       <div className={styles.container}>
         <Menu genres={genres} handleClickFilter={handleClickFilter} onSearch={onSearch} />
-        <Image src={Logo} alt="Logo do Masters Games" />
+        <Link href='/'>
+          <Image src={Logo} alt="Logo do Masters Games" />
+        </Link>
         <div className={styles.desktopSearch}>
           <Search onSearch={onSearch} />
         </div>

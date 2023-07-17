@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { auth } from '../../config/firebase';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 import styles from './RegisterForm.module.css';
 import Button from '../Button/Button';
@@ -13,7 +13,6 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 export default function Register({ onLogin }) {
-  const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,39 +26,32 @@ export default function Register({ onLogin }) {
   };
 
   const handleSignUp = async () => {
-    if (!email || !password || !username) {
+    if (!email || !password ) {
       setFormError('Por favor, preencha todos os campos.');
-      return
+      return;
     }
     if (password.length < 6) {
       setFormError('A senha deve ter no mínimo 6 caracteres.');
-      return
+      return;
     }
     if (password !== confirmPassword) {
       setFormError('As senhas não coincidem.');
-      return
+      return;
     }
 
     try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(auth.currentUser, {
-        displayName: username
-      })
-      router.push('/')
+      await createUserWithEmailAndPassword(auth, email, password);
+      router.push('/');
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
+
 
   return (
     <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
       <h2 className={styles.title}>Crie sua conta</h2>
       <div className={styles.formGroup}>
-        <Input
-          label='Nome'
-          type='text'
-          onChange={(e) => setUsername(e.target.value)}
-        />
         <Input
           label='Email'
           type='email'

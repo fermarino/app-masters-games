@@ -20,7 +20,7 @@ const AuthPage = () => {
 
   const handleToggleResetForm = () => {
     setIsResetingPassword(!isResetingPassword);
-    setIsRegistering(false);
+    setIsRegistering(true);
   };
 
   return (

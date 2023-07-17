@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import GamesList from '@/components/GamesList/GamesList';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
 import { useRatings } from '@/hooks/useRatings'; 
 
 const FavoritesPage = ({ games }) => {
@@ -19,7 +18,7 @@ const FavoritesPage = ({ games }) => {
   const filteredGames = games?.filter((game) => favoriteGames.includes(game.id));
 
   useEffect(() => {
-    document.title = 'Meus Favoritos';
+    document.title = 'Masters Games - Favoritos';
   }, []);
 
   return (

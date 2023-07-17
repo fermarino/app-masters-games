@@ -1,33 +1,37 @@
 import styles from './Game.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
-import { FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaStar, FaTimes } from 'react-icons/fa';
 
 import { useFavorites } from '@/hooks/useFavorites';
 import { useRatings } from '@/hooks/useRatings';
 import Modal from '@/components/Modal/Modal';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Game = ({ game, user }) => {
   const [hoverRating, setHoverRating] = useState(null);
-
-  const { favoriteGames, addFavorite } = useFavorites();
-  const { userRatings, gameRatings, addRating } = useRatings();
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalButtonText, setModalButtonText] = useState('');
+  const [isCardOpen, setIsCardOpen] = useState(false);
+  const [clickedFavorite, setClickedFavorite] = useState(false)
+
+  const { favoriteGames, addFavorite } = useFavorites();
+  const { userRatings, gameRatings, addRating } = useRatings();
 
   const isFavorite = favoriteGames && favoriteGames.includes(game.id);
   const userRating = userRatings && userRatings[game.id];
   const gameRating = gameRatings && gameRatings[game.id];
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleFavorite = () => {
     if (user) {
       addFavorite(game.id);
+      setClickedFavorite(true);
     } else {
-      setModalMessage('Você deve entrar em sua conta para favoritar um jogo');
+      setModalMessage('Você deve entrar em sua conta para favoritar um jogo.');
       setModalButtonText('Entrar');
       setShowModal(true);
     }
@@ -37,7 +41,7 @@ const Game = ({ game, user }) => {
     if (user) {
       addRating(game.id, rating);
     } else {
-      setModalMessage('Você deve entrar em sua conta para avaliar o jogo');
+      setModalMessage('Você deve entrar em sua conta para avaliar um jogo.');
       setModalButtonText('Entrar');
       setShowModal(true);
     }
@@ -56,8 +60,9 @@ const Game = ({ game, user }) => {
   };
 
   const redirectToAuth = () => {
-    router.push('/auth')
+    router.push('/auth');
   };
+
 
   const renderStars = () => {
     const stars = [];
@@ -76,6 +81,14 @@ const Game = ({ game, user }) => {
     }
 
     return stars;
+  };
+
+  const openCardModal = () => {
+    setIsCardOpen(true);
+  };
+
+  const closeCardModal = () => {
+    setIsCardOpen(false);
   };
 
   return (
@@ -100,12 +113,13 @@ const Game = ({ game, user }) => {
               {gameRating.average.toFixed(1)} ({gameRating.count})
             </span>
           ) : (
-            <span className={styles.ratingInfo}>
-              0.0 (0)
-            </span>
+            <span className={styles.ratingInfo}>0.0 (0)</span>
           )}
         </div>
-        <button onClick={handleFavorite} className={styles.favoriteButton}>
+        <button
+          onClick={handleFavorite}
+          className={`${styles.favoriteButton} ${isFavorite ? styles.clicked : ''} ${clickedFavorite ? styles.favoriteIcon : ''}`}
+        >
           {isFavorite ? (
             <FaHeart className={`${styles.favoriteIcon} ${styles.favoriteFilled}`} />
           ) : (
@@ -114,6 +128,9 @@ const Game = ({ game, user }) => {
         </button>
       </div>
       <p className={styles.gameDesc}>{game.short_description}</p>
+      <button onClick={openCardModal} className={styles.viewDetailsButton}>
+        Mais detalhes
+      </button>
       {showModal && (
         <Modal
           message={modalMessage}
@@ -121,6 +138,35 @@ const Game = ({ game, user }) => {
           onClose={closeModal}
           onButtonClick={redirectToAuth}
         />
+      )}
+      {isCardOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalCardContent}>
+              <h2 className={styles.modalTitle}>{game.title}</h2>
+              <h3 className={styles.modalGenre}>{game.genre}</h3>
+              <Image
+                src={game.thumbnail}
+                alt={game.title}
+                className={styles.gameImg}
+                width={0}
+                height={0}
+                sizes="100vw"
+              />
+              <p className={styles.modalDesc}>{game.short_description}</p>
+              <p className={styles.modalDesc}><span className={styles.infoSpan}>Data de Lançamento:</span> {game.release_date}</p>
+              <p className={styles.modalDesc}><span className={styles.infoSpan}>Plataforma:</span> {game.platform}</p>
+              <p className={styles.modalDesc}><span className={styles.infoSpan}>Empresa:</span> {game.developer}</p>
+              <p className={styles.modalDesc}><span className={styles.infoSpan}>Editora: </span>{game.publisher}</p>
+              <Link href={game.game_url}>
+                <p className={styles.link}>Baixe agora</p>
+              </Link>
+              <button className={styles.closeButton} onClick={closeCardModal}>
+                <FaTimes />
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

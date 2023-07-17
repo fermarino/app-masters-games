@@ -3,13 +3,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--primary-color);
+  background-color: #2a2a2c;
   border-radius: 8px;
   gap: 2.4rem;
-  padding: 20px;
+  padding: 20px 10px;
   margin: 0 auto;
   
-  min-width: 400px;
+  width: 90%;
   max-height: 700px;
 }
 
@@ -43,12 +43,15 @@
 .error {
   color: red;
   font-size: 1.1rem;
+  margin-top: 1.3rem;
 }
 
 .passwordButton {
   position: absolute;
   right: 12px;
-  top: 87%;
+  justify-content: center;
+  margin-bottom: 8rem;
+  bottom: 20%;
   transform: translateY(-50%);
   background: transparent;
   border: none;
@@ -66,4 +69,23 @@
 
 .passwordField {
   position: relative;
+}
+
+
+@media screen and (min-width: 519px) and (max-width: 589px ) {
+  .form {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 590px) {
+  .form {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .form {
+    max-width: 400px;
+  }
 }

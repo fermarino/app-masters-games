@@ -1,16 +1,18 @@
 .cardGame {
   background: var(--dark-primary-color);
   border-radius: 8px;
-  border: 0.5px solid var(--light-grey-border);
-  color: #fff;
   
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 1.8rem;
+  padding: 2rem;
   width: 90%;
-  height: 470px;
+  height: 500px;
+  cursor: pointer;
+
 }
 
 .starFilled {
@@ -80,7 +82,29 @@
 }
 
 .favoriteOutline {
-  color: #fff;
+  color: #ccc;
+}
+
+.favoriteIcon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.favoriteIcon.clicked {
+  animation: heartExplosionAnimation 0.5s;
+}
+
+@keyframes heartExplosionAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .ratingInfo {
@@ -98,6 +122,98 @@
   width: 100%;
 }
 
+.viewDetailsButton {
+  padding: 8px 16px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: var(--secondary-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modalContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 2.4rem;
+  max-width: 600px;
+  width: 90%;
+  min-height: 65vh;
+  background-color: var(--dark-primary-color);
+  border-radius: 8px;
+  overflow-y: auto;
+  text-align: center;
+  animation: modalZoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+
+.modalTitle {
+  margin: 10px 0;
+  font-size: 24px;
+  color: var(--secondary-color);
+}
+
+.modalGenre {
+  margin: 10px 0;
+  font-size: 14px;
+  color: var(--secondary-color);
+}
+
+.modalDesc {
+  margin: 10px 0;
+  text-align: left;
+  font-size: 1.4rem;
+  word-break: break-all;
+  width: 100%;
+  font-weight: 500;
+  color: var(--font-color);
+}
+
+.infoSpan {
+  font-size: 1.6rem;
+  color: #b5b5b5;
+}
+
+.link {
+  background-color: var(--secondary-color);
+  margin: 14px auto;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 1.2rem;
+  width: 30%;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  background-color: var(--dark-primary-color);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
 
 @media screen and (min-width: 549px) and (max-width: 987px) {
 	.cardGame {
@@ -111,3 +227,20 @@
     height: 500px;
   }
 }
+
+@media screen and (min-width: 1240px) {
+	.cardGame {
+    width: 29%;
+    height: 600px;
+  }
+}
+  @keyframes modalZoomIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
