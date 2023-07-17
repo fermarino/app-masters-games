@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import styles from './GamesList.module.css';
 
 import { useFavorites } from '@/hooks/useFavorites';
-import { useRatings } from '@/hooks/useRatings';
 
 import Game from '../Game/Game';
 import Header from '../Header/Header';
@@ -57,7 +56,7 @@ const GamesList = ({ games, user, onRating, userRatings, favoriteGames }) => {
       <main>
         <div className={styles.container}>
           <div className={styles.gamesList}>
-            {filteredGames.map((game) => (
+          {filteredGamesGenre.map((game) => (
               <Game
                 game={game}
                 id={game.id}
