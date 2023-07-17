@@ -5,11 +5,15 @@ import GamesList from '@/components/GamesList/GamesList';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useAuth } from '@/hooks/useAuth';
 import { useRatings } from '@/hooks/useRatings'; 
+import { useRouter } from 'next/navigation';
+
 
 const FavoritesPage = ({ games }) => {
   const { favoriteGames } = useFavorites();
   const { userRatings, addRating } = useRatings();
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+
+  const router = useRouter()
 
   const handleRating = (gameId, ratingValue) => {
     addRating(gameId, ratingValue);
@@ -20,6 +24,12 @@ const FavoritesPage = ({ games }) => {
   useEffect(() => {
     document.title = 'Masters Games - Favoritos';
   }, []);
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/auth');
+    }
+  }, [user, isLoading, router]);
 
   return (
     <div>

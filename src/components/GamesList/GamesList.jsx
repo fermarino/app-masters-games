@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './GamesList.module.css';
 
 import { useFavorites } from '@/hooks/useFavorites';
@@ -25,7 +25,12 @@ const GamesList = ({ games, user, onRating, userRatings, favoriteGames }) => {
     setSearch(value);
   };
 
-  const filteredGames = games.filter((game) => game?.title?.toLowerCase().includes(lowerSearch));
+  const filteredGames = games.filter((game) => {
+    const matchTitle = game?.title?.toLowerCase().includes(lowerSearch);
+    const matchGenre =
+      isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase();
+    return matchTitle && matchGenre;
+  });
 
   const filteredGenres = games.reduce((genres, game) => {
     if (!genres.includes(game.genre)) {
@@ -37,10 +42,6 @@ const GamesList = ({ games, user, onRating, userRatings, favoriteGames }) => {
   const handleClickFilter = (genre) => {
     setIsActive(genre);
   };
-
-  const filteredGamesGenre = showFavorites
-    ? games.filter((game) => favoriteGames.includes(game.id))
-    : games.filter((game) => isActive === 'All' || game.genre.toLowerCase() === isActive.toLowerCase());
 
   return (
     <>
@@ -56,7 +57,7 @@ const GamesList = ({ games, user, onRating, userRatings, favoriteGames }) => {
       <main>
         <div className={styles.container}>
           <div className={styles.gamesList}>
-          {filteredGamesGenre.map((game) => (
+          {filteredGames.map((game) => (
               <Game
                 game={game}
                 id={game.id}
